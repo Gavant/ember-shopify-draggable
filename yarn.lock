@@ -1858,6 +1858,12 @@ ember-cli-dependency-checker@^2.0.0:
     resolve "^1.5.0"
     semver "^5.3.0"
 
+ember-cli-es6-transform@^0.0.5:
+  version "0.0.5"
+  resolved "http://artifactory.gavant.com:8081/artifactory/api/npm/npm-virtual/ember-cli-es6-transform/-/ember-cli-es6-transform-0.0.5.tgz#05bd0aa7e83e14a745e303bd331d912b62f712c6"
+  dependencies:
+    ember-cli-babel "^6.16.0"
+
 ember-cli-eslint@^4.2.1:
   version "4.2.3"
   resolved "http://artifactory.gavant.com:8081/artifactory/api/npm/npm-virtual/ember-cli-eslint/-/ember-cli-eslint-4.2.3.tgz#2844d3f5e8184f19b2d7132ba99eb0b370b55598"
