@@ -1,5 +1,5 @@
-.shopify-sortable,
-.shopify-swappable {
+.swappable-group,
+.sortable-group {
   display: flex;
 }
 .sortable-container,

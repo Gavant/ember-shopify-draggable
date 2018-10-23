@@ -2,41 +2,40 @@
 
 {{outlet}}
 <div>
-  <h5>Swappable</h5>
-  {{#shopify-swappable swapped=(action 'swapped')}}
-    {{#swappable-container as |c|}}
-      {{#each list as |item|}}
-        {{#swappable-item}}
-          {{item.name}}
-        {{/swappable-item}}
-      {{/each}}
-    {{/swappable-container}}
-    {{#swappable-container as |c|}}
-      {{#each listTwo as |item|}}
-        {{#swappable-item}}
-          {{item.name}}
-        {{/swappable-item}}
-      {{/each}}
-    {{/swappable-container}}
-  {{/shopify-swappable}}
+    <h5>Swappable</h5>
+    {{#swappable-group swapped=(action 'swapped') as |group|}}
+        {{#group.container as |container|}}
+            {{#each list as |item|}}
+                {{#container.item}}
+                    {{item.name}}
+                {{/container.item}}
+            {{/each}}
+        {{/group.container}}
+        {{#group.container as |container|}}
+            {{#each listTwo as |item|}}
+                {{#container.item}}
+                    {{item.name}}
+                {{/container.item}}
+            {{/each}}
+        {{/group.container}}
+    {{/swappable-group}}
 </div>
 <div>
-  <h5>Sortable</h5>
-  {{#shopify-sortable sorted=(action 'sorted')}}
-    {{#sortable-container as |c|}}
-      {{#each list as |item|}}
-        {{#sortable-item}}
-          {{item.name}}
-        {{/sortable-item}}
-      {{/each}}
-    {{/sortable-container}}
-
-    {{#sortable-container as |c|}}
-      {{#each listTwo as |item|}}
-        {{#sortable-item}}
-          {{item.name}}
-        {{/sortable-item}}
-      {{/each}}
-    {{/sortable-container}}
-  {{/shopify-sortable}}
+    <h5>Sortable</h5>
+    {{#sortable-group sorted=(action 'sorted') as |group|}}
+        {{#group.container as |container|}}
+            {{#each list as |item|}}
+                {{#container.item}}
+                    {{item.name}}
+                {{/container.item}}
+            {{/each}}
+        {{/group.container}}
+        {{#group.container as |container|}}
+            {{#each listTwo as |item|}}
+                {{#container.item}}
+                    {{item.name}}
+                {{/container.item}}
+            {{/each}}
+        {{/group.container}}
+    {{/sortable-group}}
 </div>
