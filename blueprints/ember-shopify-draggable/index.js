@@ -2,6 +2,6 @@
 module.exports = {
    normalizeEntityName() {},
    afterInstall() {
-     return this.addPackagesToProject(['ember-cli-es6-transform', '@shopify/draggable']);
+     return this.addPackagesToProject([{ name: 'ember-cli-es6-transform'},{ name: '@shopify/draggable'}]);
    },
 };
