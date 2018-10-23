@@ -20,7 +20,7 @@ Usage
 
 Right now this addon contains ember components for `swappable` and `sortable`. We hope to have full parity with all features of @shopify/draggable soon.
 
-Swappable functionality
+### Swappable functionality
 ```
 {{#swappable-group swapped=(action 'swapped') as |group|}}
     {{#group.container as |container|}}
@@ -40,10 +40,11 @@ Swappable functionality
 {{/swappable-group}}
 ```
 
-Possible events for swappable can be found at `https://shopify.github.io/draggable/docs/identifiers.html#swappable-swappableevent`
+Possible events for swappable can be found at [Swappable Events](https://shopify.github.io/draggable/docs/identifiers.html#swappable-swappableevent)
+
 You can see an example of the `swapped` event being used above.
 
-Sortable functionality
+### Sortable functionality
 ```
 {{#sortable-group sorted=(action 'sorted') as |group|}}
     {{#group.container as |container|}}
@@ -63,7 +64,8 @@ Sortable functionality
 {{/sortable-group}}
 ```
 
-Possible events for sortable can be found at `https://shopify.github.io/draggable/docs/identifiers.html#sortable-sortableevent`
+Possible events for sortable can be found at [Sortable Events](https://shopify.github.io/draggable/docs/identifiers.html#sortable-sortableevent)
+
 You can see an example of the `sorted` event being used above.
 
 Contributing
