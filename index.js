@@ -16,7 +16,7 @@ module.exports = {
 
     browserVendorLib = map(browserVendorLib, (content) => `if (typeof FastBoot === 'undefined') { ${content} }`);
 
-    return new mergeTrees([defaultTree, browserVendorLib]);
+    return browserVendorLib ? new mergeTrees([defaultTree, browserVendorLib]) : defaultTree;
   },
 
   included(app) {
