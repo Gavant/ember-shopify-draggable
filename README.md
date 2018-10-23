@@ -3,9 +3,9 @@ ember-shopify-draggable
 
 Addon for using @shopify/draggable in ember projects.
 
--[x] Easy to use 
--[x] Fastboot Compatible (doesn't run in fastboot)
--[x] Easily Extendable
+- [X] Easy to use 
+- [X] Fastboot Compatible (doesn't run in fastboot)
+- [X] Easily Extendable
 
 Installation
 ------------------------------------------------------------------------------
