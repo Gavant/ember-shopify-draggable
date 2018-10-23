@@ -1,20 +1,42 @@
 <h2 id="title">Welcome to Ember</h2>
 
 {{outlet}}
-List 1
-{{#swap-container as |c|}}
-  {{#each list as |item|}}
-    {{#swap-item}}
-      {{item.name}}
-    {{/swap-item}}
-  {{/each}}
-{{/swap-container}}
+<div>
+  <h5>Swappable</h5>
+  {{#shopify-swappable swapped=(action 'swapped')}}
+    {{#swappable-container as |c|}}
+      {{#each list as |item|}}
+        {{#swappable-item}}
+          {{item.name}}
+        {{/swappable-item}}
+      {{/each}}
+    {{/swappable-container}}
+    {{#swappable-container as |c|}}
+      {{#each listTwo as |item|}}
+        {{#swappable-item}}
+          {{item.name}}
+        {{/swappable-item}}
+      {{/each}}
+    {{/swappable-container}}
+  {{/shopify-swappable}}
+</div>
+<div>
+  <h5>Sortable</h5>
+  {{#shopify-sortable sorted=(action 'sorted')}}
+    {{#sortable-container as |c|}}
+      {{#each list as |item|}}
+        {{#sortable-item}}
+          {{item.name}}
+        {{/sortable-item}}
+      {{/each}}
+    {{/sortable-container}}
 
-List 2
-{{#swap-container as |c|}}
-  {{#each listTwo as |item|}}
-    {{#swap-item}}
-      {{item.name}}
-    {{/swap-item}}
-  {{/each}}
-{{/swap-container}}
+    {{#sortable-container as |c|}}
+      {{#each listTwo as |item|}}
+        {{#sortable-item}}
+          {{item.name}}
+        {{/sortable-item}}
+      {{/each}}
+    {{/sortable-container}}
+  {{/shopify-sortable}}
+</div>
