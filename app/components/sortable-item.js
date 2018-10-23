@@ -1,0 +1,1 @@
+export { default } from 'ember-shopify-draggable/components/sortable-item';

@@ -1,3 +1,41 @@
 <h2 id="title">Welcome to Ember</h2>
 
 {{outlet}}
+<div>
+    <h5>Swappable</h5>
+    {{#swappable-group swapped=(action 'swapped') as |group|}}
+        {{#group.container as |container|}}
+            {{#each list as |item|}}
+                {{#container.item}}
+                    {{item.name}}
+                {{/container.item}}
+            {{/each}}
+        {{/group.container}}
+        {{#group.container as |container|}}
+            {{#each listTwo as |item|}}
+                {{#container.item}}
+                    {{item.name}}
+                {{/container.item}}
+            {{/each}}
+        {{/group.container}}
+    {{/swappable-group}}
+</div>
+<div>
+    <h5>Sortable</h5>
+    {{#sortable-group sorted=(action 'sorted') as |group|}}
+        {{#group.container as |container|}}
+            {{#each list as |item|}}
+                {{#container.item}}
+                    {{item.name}}
+                {{/container.item}}
+            {{/each}}
+        {{/group.container}}
+        {{#group.container as |container|}}
+            {{#each listTwo as |item|}}
+                {{#container.item}}
+                    {{item.name}}
+                {{/container.item}}
+            {{/each}}
+        {{/group.container}}
+    {{/sortable-group}}
+</div>

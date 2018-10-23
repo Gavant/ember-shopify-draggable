@@ -1,1 +1,0 @@
-export { default } from 'ember-shopify-draggable/components/swap-item';

@@ -1,0 +1,11 @@
+.swappable-group,
+.sortable-group {
+  display: flex;
+}
+.sortable-container,
+.swappable-container {
+  width: 50%;
+  background-color: #CECECE;
+  padding: 10px;
+  margin: 10px;
+}
