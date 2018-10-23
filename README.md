@@ -1,7 +1,11 @@
 ember-shopify-draggable
 ==============================================================================
 
-[Short description of the addon.]
+Addon for using @shopify/draggable in ember projects.
+
+-[x] Easy to use 
+-[x] Fastboot Compatible (doesn't run in fastboot)
+-[x] Easily Extendable
 
 Installation
 ------------------------------------------------------------------------------
@@ -14,8 +18,53 @@ ember install ember-shopify-draggable
 Usage
 ------------------------------------------------------------------------------
 
-[Longer description of how to use the addon in apps.]
+Right now this addon contains ember components for `swappable` and `sortable`. We hope to have full parity with all features of @shopify/draggable soon.
 
+Swappable functionality
+```
+{{#swappable-group swapped=(action 'swapped') as |group|}}
+    {{#group.container as |container|}}
+        {{#each list as |item|}}
+            {{#container.item}}
+                {{item.name}}
+            {{/container.item}}
+        {{/each}}
+    {{/group.container}}
+    {{#group.container as |container|}}
+        {{#each listTwo as |item|}}
+            {{#container.item}}
+                {{item.name}}
+            {{/container.item}}
+        {{/each}}
+    {{/group.container}}
+{{/swappable-group}}
+```
+
+Possible events for swappable can be found at `https://shopify.github.io/draggable/docs/identifiers.html#swappable-swappableevent`
+You can see an example of the `swapped` event being used above.
+
+Sortable functionality
+```
+{{#sortable-group sorted=(action 'sorted') as |group|}}
+    {{#group.container as |container|}}
+        {{#each list as |item|}}
+            {{#container.item}}
+                {{item.name}}
+            {{/container.item}}
+        {{/each}}
+    {{/group.container}}
+    {{#group.container as |container|}}
+        {{#each listTwo as |item|}}
+            {{#container.item}}
+                {{item.name}}
+            {{/container.item}}
+        {{/each}}
+    {{/group.container}}
+{{/sortable-group}}
+```
+
+Possible events for sortable can be found at `https://shopify.github.io/draggable/docs/identifiers.html#sortable-sortableevent`
+You can see an example of the `sorted` event being used above.
 
 Contributing
 ------------------------------------------------------------------------------
