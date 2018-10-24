@@ -8,6 +8,7 @@ import { A } from '@ember/array';
 export default Component.extend({
     layout,
     classNames: ['sortable-group'],
+    sortable: null,
     events: A([
         'sort',
         'sorted',
@@ -22,10 +23,9 @@ export default Component.extend({
             });
         });
     },
-    didInsertElement() {
-        this._super(...arguments);
-        const node = this.$('.sortable-container').toArray();
-        const sortable = new Sortable(node, {
+    init() {
+        //Default sortable group array to be null, these will be added when the sortable groups insert into the DOM
+        const sortable = new Sortable([], {
             draggable: '.sortable-item',
             mirror: {
                 constrainDimensions: true
@@ -34,6 +34,7 @@ export default Component.extend({
         });
         set(this, 'sortable', sortable);
         this.initializeEventListeners();
+        this._super(...arguments);
     },
     willDestroyElement() {
         get(this, 'sortable').destroy();
