@@ -22,19 +22,18 @@ export default Component.extend({
             });
         });
     },
-    didInsertElement() {
-        this._super(...arguments);
-        const node = this.$('.swappable-container').toArray();
-        const swappable = new Swappable(node, {
+    init() {
+        //Default swappable group array to be null, these will be added when the sortable groups insert into the DOM
+        const swappable = new Swappable([], {
             draggable: '.swappable-item',
             mirror: {
-                appendTo: node,
                 constrainDimensions: true
             },
             plugins: [Plugins.ResizeMirror]
         });
         set(this, 'swappable', swappable);
         this.initializeEventListeners();
+        this._super(...arguments);
     },
     willDestroyElement() {
         get(this, 'swappable').destroy();
