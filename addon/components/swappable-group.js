@@ -8,6 +8,7 @@ import { tryInvoke } from '@ember/utils';
 export default Component.extend({
     layout,
     classNames: ['swappable-group'],
+    swappable: null,
     events: A([
         'swap',
         'swapped',
