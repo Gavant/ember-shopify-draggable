@@ -1,9 +1,10 @@
 import Component from '@ember/component';
 import { Sortable, Plugins } from 'draggable';
 import layout from '../templates/components/sortable-group';
-import { get, set } from '@ember/object';
+import { get, set, computed } from '@ember/object';
 import { tryInvoke } from '@ember/utils';
 import { A } from '@ember/array';
+import { getOwner } from '@ember/application';
 
 export default Component.extend({
     layout,
@@ -15,6 +16,10 @@ export default Component.extend({
         'start',
         'stop'
     ]),
+    fastboot: computed(function() {
+        let owner = getOwner(this);
+        return owner.lookup('service:fastboot');
+    }),
     initializeEventListeners() {
         const sortable = get(this, 'sortable');
         get(this, 'events').forEach(eventName => {
@@ -24,8 +29,9 @@ export default Component.extend({
         });
     },
     init() {
+        const fastboot = get(this, 'fastboot');
         //Default sortable group array to be null, these will be added when the sortable groups insert into the DOM
-        if (!get(this, 'fastboot.isFastBoot')) {
+        if (!fastboot || get(fastboot, 'isFastBoot') === false) {
             const sortable = new Sortable([], {
                 draggable: '.sortable-item',
                 mirror: {
