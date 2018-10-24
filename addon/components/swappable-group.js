@@ -29,9 +29,8 @@ export default Component.extend({
         });
     },
     init() {
-        const fastboot = get(this, 'fastboot');
         //Default swappable group array to be null, these will be added when the sortable groups insert into the DOM
-        if (!fastboot || get(fastboot, 'isFastBoot') === false) {
+        if (!get(this, 'fastboot.isFastBoot')) {
             const swappable = new Swappable([], {
                 draggable: '.swappable-item',
                 mirror: {
