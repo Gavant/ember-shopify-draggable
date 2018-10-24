@@ -7,10 +7,10 @@ export default Component.extend({
     classNames: ['sortable-container'],
     didInsertElement() {
         this._super(...arguments);
-        get(this, 'group.sortable').addContainer(this.$()[0]);
+        get(this, 'group.sortable').addContainer(this.element);
     },
     willDestroyElement() {
         this._super(...arguments);
-        get(this, 'group.sortable').removeContainer(this.$()[0]);
+        get(this, 'group.sortable').removeContainer(this.element);
     },
 });

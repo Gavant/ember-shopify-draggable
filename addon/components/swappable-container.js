@@ -7,10 +7,10 @@ export default Component.extend({
     classNames: ['swappable-container'],
     didInsertElement() {
         this._super(...arguments);
-        get(this, 'group.swappable').addContainer(this.$()[0]);
+        get(this, 'group.swappable').addContainer(this.element);
     },
     willDestroyElement() {
         this._super(...arguments);
-        get(this, 'group.swappable').removeContainer(this.$()[0]);
+        get(this, 'group.swappable').removeContainer(this.element);
     },
 });
