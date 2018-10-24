@@ -1,9 +1,10 @@
 import Component from '@ember/component';
 import { Swappable, Plugins } from 'draggable';
 import layout from '../templates/components/swappable-group';
-import { get, set } from '@ember/object';
+import { get, set, computed } from '@ember/object';
 import { A } from '@ember/array';
 import { tryInvoke } from '@ember/utils';
+import { getOwner } from '@ember/application';
 
 export default Component.extend({
     layout,
@@ -15,6 +16,10 @@ export default Component.extend({
         'start',
         'stop'
     ]),
+    fastboot: computed(function() {
+        let owner = getOwner(this);
+        return owner.lookup('service:fastboot');
+    }),
     initializeEventListeners() {
         const swappable = get(this, 'swappable');
         get(this, 'events').forEach(eventName => {
@@ -25,15 +30,18 @@ export default Component.extend({
     },
     init() {
         //Default swappable group array to be null, these will be added when the sortable groups insert into the DOM
-        const swappable = new Swappable([], {
-            draggable: '.swappable-item',
-            mirror: {
-                constrainDimensions: true
-            },
-            plugins: [Plugins.ResizeMirror]
-        });
-        set(this, 'swappable', swappable);
-        this.initializeEventListeners();
+        if (!get(this, 'fastboot.isFastBoot')) {
+            const swappable = new Swappable([], {
+                draggable: '.swappable-item',
+                mirror: {
+                    constrainDimensions: true
+                },
+                plugins: [Plugins.ResizeMirror]
+            });
+            set(this, 'swappable', swappable);
+            this.initializeEventListeners();
+        }
+
         this._super(...arguments);
     },
     willDestroyElement() {
