@@ -25,15 +25,18 @@ export default Component.extend({
     },
     init() {
         //Default swappable group array to be null, these will be added when the sortable groups insert into the DOM
-        const swappable = new Swappable([], {
-            draggable: '.swappable-item',
-            mirror: {
-                constrainDimensions: true
-            },
-            plugins: [Plugins.ResizeMirror]
-        });
-        set(this, 'swappable', swappable);
-        this.initializeEventListeners();
+        if (!get(this, 'fastboot.isFastBoot')) {
+            const swappable = new Swappable([], {
+                draggable: '.swappable-item',
+                mirror: {
+                    constrainDimensions: true
+                },
+                plugins: [Plugins.ResizeMirror]
+            });
+            set(this, 'swappable', swappable);
+            this.initializeEventListeners();
+        }
+
         this._super(...arguments);
     },
     willDestroyElement() {

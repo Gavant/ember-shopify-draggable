@@ -25,15 +25,18 @@ export default Component.extend({
     },
     init() {
         //Default sortable group array to be null, these will be added when the sortable groups insert into the DOM
-        const sortable = new Sortable([], {
-            draggable: '.sortable-item',
-            mirror: {
-                constrainDimensions: true
-            },
-            plugins: [Plugins.ResizeMirror]
-        });
-        set(this, 'sortable', sortable);
-        this.initializeEventListeners();
+        if (!get(this, 'fastboot.isFastBoot')) {
+            const sortable = new Sortable([], {
+                draggable: '.sortable-item',
+                mirror: {
+                    constrainDimensions: true
+                },
+                plugins: [Plugins.ResizeMirror]
+            });
+            set(this, 'sortable', sortable);
+            this.initializeEventListeners();
+        }
+
         this._super(...arguments);
     },
     willDestroyElement() {
