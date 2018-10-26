@@ -1,1 +1,7 @@
-{{yield (hash item=(component 'sortable-item'))}}
+{{!-- {{#each items as |item|}}
+    {{#sortable-item item container=this dragStart=(action 'dragStart')}}
+        {{yield item}}
+    {{/sortable-item}}
+
+{{/each}} --}}
+{{yield (hash item=(component 'sortable-item' container=this dragStart=(action 'dragStart')))}}
