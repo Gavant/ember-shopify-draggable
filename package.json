@@ -5,7 +5,7 @@
   "keywords": [
     "ember-addon"
   ],
-  "repository": "",
+  "repository": "https://github.com/Gavant/ember-shopify-draggable",
   "license": "MIT",
   "author": "",
   "directories": {
