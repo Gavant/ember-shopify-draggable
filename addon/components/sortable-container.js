@@ -4,6 +4,7 @@ import { get, set } from '@ember/object';
 import { tryInvoke } from '@ember/utils';
 import { A } from '@ember/array';
 import { next } from '@ember/runloop';
+import { trySet } from '@ember/object';
 
 export default Component.extend({
     layout,
@@ -11,7 +12,7 @@ export default Component.extend({
     items: null,
     actions: {
         dragStart(item) {
-            set(this, 'group.dragItem', item);
+            trySet(this, 'group.dragItem', item);
         }
     },
     didInsertElement() {
@@ -23,8 +24,8 @@ export default Component.extend({
                 if (element) {
                     element.parentNode.removeChild(element);
                 }
-                set(this, 'group.dragItem', null);
-                set(this, 'dragEventNode', null);
+                trySet(this, 'group.dragItem', null);
+                trySet(this, 'dragEventNode', null);
             });
 
         });
