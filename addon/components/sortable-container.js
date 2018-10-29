@@ -30,24 +30,26 @@ export default Component.extend({
 
         });
         get(this, 'group.sortable').on('sortable:stop', (event) => {
-            const items = A(get(this, 'items').toArray());
-            const targetContainer = get(event, 'data.newContainer');
-            const targetIndex = get(event, 'data.newIndex');
-            const oldContainer = get(event, 'data.oldContainer');
-            const oldIndex = get(event, 'data.oldIndex');
-            const item = get(this, 'group.dragItem');
-            //Sorted within this container
-            if (this.element.isSameNode(targetContainer) && this.element.isSameNode(oldContainer)) {
-                items.removeAt(oldIndex, 1);
-                items.insertAt(targetIndex, item);
-                tryInvoke(this, 'itemReordered', [items, item, event]);
-            } else if (this.element.isSameNode(targetContainer)) { // added to this container
-                items.insertAt(targetIndex, item);
-                tryInvoke(this, 'itemAdded', [items, item, event]);
-                set(this, 'dragEventNode', get(event, 'data.dragEvent.source'));
-            } else if (this.element.isSameNode(oldContainer)) { // removed from this container
-                items.removeAt(oldIndex, 1);
-                tryInvoke(this, 'itemRemoved', [items, item, event]);
+            if (this.element) {
+                const items = A(get(this, 'items').toArray());
+                const targetContainer = get(event, 'data.newContainer');
+                const targetIndex = get(event, 'data.newIndex');
+                const oldContainer = get(event, 'data.oldContainer');
+                const oldIndex = get(event, 'data.oldIndex');
+                const item = get(this, 'group.dragItem');
+                //Sorted within this container
+                if (this.element.isSameNode(targetContainer) && this.element.isSameNode(oldContainer)) {
+                    items.removeAt(oldIndex, 1);
+                    items.insertAt(targetIndex, item);
+                    tryInvoke(this, 'itemReordered', [items, item, event]);
+                } else if (this.element.isSameNode(targetContainer)) { // added to this container
+                    items.insertAt(targetIndex, item);
+                    tryInvoke(this, 'itemAdded', [items, item, event]);
+                    set(this, 'dragEventNode', get(event, 'data.dragEvent.source'));
+                } else if (this.element.isSameNode(oldContainer)) { // removed from this container
+                    items.removeAt(oldIndex, 1);
+                    tryInvoke(this, 'itemRemoved', [items, item, event]);
+                }
             }
         });
     },
