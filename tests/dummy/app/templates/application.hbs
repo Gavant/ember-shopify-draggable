@@ -22,29 +22,26 @@
 </div>
 <div>
     <h5>Sortable</h5>
-    {{!-- {{#sortable-group sorted=(action 'sorted') as |group|}}
-        {{#group.container list
-            itemAdded=(action (mut list))
-            itemRemoved=(action (mut list)) as |item|}}
-            {{item.name}}
-        {{/group.container}}
-        {{#group.container listTwo
-            itemAdded=(action (mut listTwo))
-            itemRemoved=(action (mut listTwo)) as |item|}}
-            {{item.name}}
-        {{/group.container}}
-    {{/sortable-group}} --}}
     {{#sortable-group sorted=(action 'sorted') as |group|}}
         {{#group.container list
             itemReordered=(action (mut list))
             itemAdded=(action (mut list))
-            itemRemoved=(action (mut list)) as |item|}}
-                {{item.name}}
+            itemRemoved=(action (mut list)) as |container|}}
+                {{#each container.items as |item|}}
+                    {{#container.item item}}
+                        {{item.name}}
+                    {{/container.item}}
+                {{/each}}
         {{/group.container}}
         {{#group.container listTwo
+            itemReordered=(action (mut listTwo))
             itemAdded=(action (mut listTwo))
-            itemRemoved=(action (mut listTwo)) as |item|}}
-                {{item.name}}
+            itemRemoved=(action (mut listTwo)) as |container|}}
+            {{#each container.items as |item|}}
+                {{#container.item item}}
+                    {{item.name}}
+                {{/container.item}}
+            {{/each}}
         {{/group.container}}
     {{/sortable-group}}
 </div>
