@@ -31,17 +31,21 @@
                     {{#container.item item}}
                         {{item.name}}
                     {{/container.item}}
+                {{else}}
+                    Im empty
                 {{/each}}
         {{/group.container}}
         {{#group.container listTwo
             itemReordered=(action (mut listTwo))
             itemAdded=(action (mut listTwo))
             itemRemoved=(action (mut listTwo)) as |container|}}
-            {{#each container.items as |item|}}
-                {{#container.item item}}
-                    {{item.name}}
-                {{/container.item}}
-            {{/each}}
+                {{#each container.items as |item|}}
+                    {{#container.item item}}
+                        {{item.name}}
+                    {{/container.item}}
+                {{else}}
+                    Im Empty
+                {{/each}}
         {{/group.container}}
     {{/sortable-group}}
 </div>
