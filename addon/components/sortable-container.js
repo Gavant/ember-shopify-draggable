@@ -10,11 +10,6 @@ export default Component.extend({
     layout,
     classNames: ['sortable-container'],
     items: null,
-    actions: {
-        dragStart(item) {
-            trySet(this, 'group.dragItem', item);
-        }
-    },
     didInsertElement() {
         this._super(...arguments);
         get(this, 'group.sortable').addContainer(this.element);
@@ -63,6 +58,11 @@ export default Component.extend({
         this._super(...arguments);
         get(this, 'group.sortable').removeContainer(this.element);
     },
+    actions: {
+        dragStart(item) {
+            trySet(this, 'group.dragItem', item);
+        }
+    }
 }).reopenClass({
     positionalParams: ['items']
 });

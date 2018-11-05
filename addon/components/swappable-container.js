@@ -9,18 +9,6 @@ import { next } from '@ember/runloop';
 export default Component.extend({
     layout,
     classNames: ['swappable-container'],
-    actions: {
-        dragStart(item, index) {
-            trySet(this, 'group.dragItem', {
-                item, index
-            });
-        },
-        swapped(item, index, container) {
-            trySet(this, 'group.swappedItem', {
-                item, index, container
-            });
-        }
-    },
     didInsertElement() {
         this._super(...arguments);
         get(this, 'group.swappable').addContainer(this.element);
@@ -72,6 +60,18 @@ export default Component.extend({
         this._super(...arguments);
         get(this, 'group.swappable').removeContainer(this.element);
     },
+    actions: {
+        dragStart(item, index) {
+            trySet(this, 'group.dragItem', {
+                item, index
+            });
+        },
+        swapped(item, index, container) {
+            trySet(this, 'group.swappedItem', {
+                item, index, container
+            });
+        }
+    }
 }).reopenClass({
     positionalParams: ['items']
 });
