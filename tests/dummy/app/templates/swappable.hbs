@@ -1,0 +1,23 @@
+<h1>Swappable</h1>
+<div class="containers">
+    {{#swappable-group as |group|}}
+        <div class="swappable container-list">
+            <header>
+                <h3>Container</h3>
+            </header>
+            {{#group.container list
+                itemReordered=(action (mut list))
+                itemAdded=(action (mut list))
+                itemRemoved=(action (mut list))
+                as |container|}}
+                    {{#each container.items as |item index|}}
+                        {{#container.item item index=index}}
+                            {{item.name}}
+                        {{/container.item}}
+                    {{else}}
+                        Im empty
+                    {{/each}}
+            {{/group.container}}
+        </div>
+    {{/swappable-group}}
+</div>

@@ -7,6 +7,8 @@ const Router = EmberRouter.extend({
 });
 
 Router.map(function() {
+  this.route('sortable');
+  this.route('swappable');
 });
 
 export default Router;

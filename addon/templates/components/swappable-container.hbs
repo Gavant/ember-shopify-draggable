@@ -1,1 +1,1 @@
-{{yield (hash item=(component 'swappable-item'))}}
+{{yield (hash items=items item=(component 'swappable-item' container=this dragStart=(action 'dragStart') swapped=(action 'swapped')))}}

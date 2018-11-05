@@ -10,6 +10,7 @@ export default Component.extend({
     layout,
     classNames: ['sortable-group'],
     sortable: null,
+    constrainDimensions: true,
     events: A([
         'sort',
         'sorted',
@@ -31,11 +32,12 @@ export default Component.extend({
     init() {
         //Default sortable group array to be null, these will be added when the sortable groups insert into the DOM
         if (!get(this, 'fastboot.isFastBoot')) {
+            const mirror = {
+                constrainDimensions: get(this, 'constrainDimensions')
+            }
             const sortable = new Sortable([], {
                 draggable: '.sortable-item',
-                mirror: {
-                    constrainDimensions: true
-                },
+                mirror,
                 plugins: [Plugins.ResizeMirror]
             });
             set(this, 'sortable', sortable);
