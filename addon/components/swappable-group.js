@@ -10,7 +10,6 @@ export default Component.extend({
     layout,
     classNames: ['swappable-group'],
     swappable: null,
-    plugins: A([Plugins.ResizeMirror]),
     constrainDimensions: true,
     events: A([
         'swap',
@@ -39,7 +38,7 @@ export default Component.extend({
             const swappable = new Swappable([], {
                 draggable: '.swappable-item',
                 mirror,
-                plugins: get(this, 'plugins')
+                plugins: [Plugins.ResizeMirror]
             });
             set(this, 'swappable', swappable);
             this.initializeEventListeners();

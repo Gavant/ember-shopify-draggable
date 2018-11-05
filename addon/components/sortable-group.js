@@ -10,7 +10,6 @@ export default Component.extend({
     layout,
     classNames: ['sortable-group'],
     sortable: null,
-    plugins: A([Plugins.ResizeMirror]),
     constrainDimensions: true,
     events: A([
         'sort',
@@ -39,7 +38,7 @@ export default Component.extend({
             const sortable = new Sortable([], {
                 draggable: '.sortable-item',
                 mirror,
-                plugins: get(this, 'plugins')
+                plugins: [Plugins.ResizeMirror]
             });
             set(this, 'sortable', sortable);
             this.initializeEventListeners();
