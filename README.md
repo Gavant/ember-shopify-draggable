@@ -10,6 +10,11 @@ Addon for using @shopify/draggable in ember projects.
 - [X] Fastboot Compatible (doesn't run in fastboot)
 - [X] Easily Extendable
 
+Demo
+------------------------------------------------------------------------------
+https://gavant.github.io/ember-shopify-draggable/#/sortable
+
+
 Installation
 ------------------------------------------------------------------------------
 
