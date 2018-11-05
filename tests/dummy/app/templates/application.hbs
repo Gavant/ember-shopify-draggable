@@ -1,63 +1,30 @@
-<h2 id="title">Welcome to Ember</h2>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      {{#link-to 'index' class="navbar-brand"}}
+        <img src="https://www.gavant.com/wp-content/uploads/2018/04/logo.png" alt="">
+        <span>Ember Shopify Draggable</span>
+      {{/link-to}}
+    </div>
 
-{{outlet}}
-<div>
-    <h5>Swappable</h5>
-    {{#swappable-group swapped=(action 'swapped') as |group|}}
-        {{#group.container list
-            itemReordered=(action (mut list))
-            itemAdded=(action (mut list))
-            itemRemoved=(action (mut list))
-            as |container|}}
-                {{#each container.items as |item index|}}
-                    {{#container.item item index=index}}
-                        {{item.name}}
-                    {{/container.item}}
-                {{else}}
-                    Im empty
-                {{/each}}
-        {{/group.container}}
-        {{#group.container listTwo
-            itemReordered=(action (mut listTwo))
-            itemAdded=(action (mut listTwo))
-            itemRemoved=(action (mut listTwo))
-            as |container|}}
-                {{#each container.items as |item index|}}
-                    {{#container.item item index=index}}
-                        {{item.name}}
-                    {{/container.item}}
-                {{else}}
-                    Im empty
-                {{/each}}
-        {{/group.container}}
-    {{/swappable-group}}
-</div>
-<div>
-    <h5>Sortable</h5>
-    {{#sortable-group sorted=(action 'sorted') as |group|}}
-        {{#group.container list
-            itemReordered=(action (mut list))
-            itemAdded=(action (mut list))
-            itemRemoved=(action (mut list)) as |container|}}
-                {{#each container.items as |item|}}
-                    {{#container.item item}}
-                        {{item.name}}
-                    {{/container.item}}
-                {{else}}
-                    Im empty
-                {{/each}}
-        {{/group.container}}
-        {{#group.container listTwo
-            itemReordered=(action (mut listTwo))
-            itemAdded=(action (mut listTwo))
-            itemRemoved=(action (mut listTwo)) as |container|}}
-                {{#each container.items as |item|}}
-                    {{#container.item item}}
-                        {{item.name}}
-                    {{/container.item}}
-                {{else}}
-                    Im Empty
-                {{/each}}
-        {{/group.container}}
-    {{/sortable-group}}
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        {{#link-to 'sortable' tagName="li"}}
+          {{link-to 'Sortable' 'sortable'}}
+        {{/link-to}}
+        {{#link-to 'swappable' tagName="li"}}
+          {{link-to 'Swappable' 'swappable'}}
+        {{/link-to}}
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="container">
+    {{outlet}}
 </div>

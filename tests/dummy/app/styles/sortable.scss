@@ -1,0 +1,64 @@
+.container-list {
+    margin-top: 2rem;
+    header {
+        background-color: #000;
+        color: #FFF;
+        padding: 2rem;
+    }
+    .sortable-container {
+        background-image: repeating-linear-gradient(-45deg,#FFF,#FFF 40%,#000 0,#000 50%,#FFF 0);
+        background-size: .8rem .8rem;
+        position: relative;
+        color: #212529;
+        box-shadow: inset 0 0 0 .6rem #000;
+        display: flex;
+        .sortable-item {
+            width: 200px;
+            display: flex;
+            justify-content: center;
+
+            align-items: center;
+            padding: 1.6rem;
+            color: currentColor;
+            background-color: #fafbfc;
+            border: .6rem solid currentColor;
+            transition: color .12s cubic-bezier(.64,0,.35,1),background-color .12s cubic-bezier(.64,0,.35,1);
+            transition: color .12s cubic-bezier(.64,0,.35,1),background-color .12s cubic-bezier(.64,0,.35,1);
+            transition: color .12s cubic-bezier(.64,0,.35,1),background-color .12s cubic-bezier(.64,0,.35,1);
+
+            &.draggable-mirror,
+            &:hover {
+                color: $color;
+            }
+        }
+    }
+    &:nth-child(1) {
+        grid-area: a;
+        display: flex;
+        flex: 1 1 auto;
+        margin-top: 0;
+        overflow-x: scroll;
+        header{
+            height: $height;
+        }
+        .sortable-container {
+            width: 100%;
+        }
+    }
+
+    &:nth-child(2) {
+        grid-area: b;
+        .sortable-container {
+            flex-direction: column;
+            min-height: 40rem;
+            .sortable-item {
+                width: 100%;
+            }
+        }
+
+    }
+
+    &:nth-child(3) {
+        grid-area: c;
+    }
+}
