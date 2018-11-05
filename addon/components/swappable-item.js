@@ -7,8 +7,6 @@ export default Component.extend({
     layout,
     classNames: ['swappable-item'],
     didInsertElement() {
-        this._super(...arguments);
-
         get(this, 'container.group.swappable').on('drag:start', (event) => {
             const source = get(event, 'data.originalSource');
             if (this.element && this.element.isSameNode(source)) {
@@ -16,12 +14,13 @@ export default Component.extend({
             }
         });
 
-        get(this, 'container.group.swappable').on('swappable:swapped', (event) => {
-            const source = get(event, 'data.swappedElement');
+        get(this, 'container.group.swappable').on('swappable:swap', (event) => {
+            const source = get(event, 'data.over');
             if (this.element && this.element.isSameNode(source)) {
-                tryInvoke(this, 'swapped', [get(this, 'item'), get(this, 'index')]);
+                tryInvoke(this, 'swapped', [get(this, 'item'), get(this, 'index'), get(event, 'overContainer')]);
             }
         });
+        this._super(...arguments);
     }
 }).reopenClass({
     positionalParams: ['item']

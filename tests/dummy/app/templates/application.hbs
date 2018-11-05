@@ -8,15 +8,27 @@
             itemReordered=(action (mut list))
             itemAdded=(action (mut list))
             itemRemoved=(action (mut list))
-            as |item|}}
-            {{item.name}}
+            as |container|}}
+                {{#each container.items as |item index|}}
+                    {{#container.item item index=index}}
+                        {{item.name}}
+                    {{/container.item}}
+                {{else}}
+                    Im empty
+                {{/each}}
         {{/group.container}}
         {{#group.container listTwo
             itemReordered=(action (mut listTwo))
             itemAdded=(action (mut listTwo))
             itemRemoved=(action (mut listTwo))
-            as |item|}}
-            {{item.name}}
+            as |container|}}
+                {{#each container.items as |item index|}}
+                    {{#container.item item index=index}}
+                        {{item.name}}
+                    {{/container.item}}
+                {{else}}
+                    Im empty
+                {{/each}}
         {{/group.container}}
     {{/swappable-group}}
 </div>

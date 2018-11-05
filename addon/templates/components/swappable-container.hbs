@@ -1,5 +1,1 @@
-{{#each initialItems as |item index|}}
-    {{#swappable-item item container=this index=index dragStart=(action 'dragStart') swapped=(action 'swapped')}}
-        {{yield item}}
-    {{/swappable-item}}
-{{/each}}
+{{yield (hash items=items item=(component 'swappable-item' container=this dragStart=(action 'dragStart') swapped=(action 'swapped')))}}

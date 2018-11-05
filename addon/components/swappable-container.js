@@ -1,9 +1,10 @@
 import Component from '@ember/component';
 import layout from '../templates/components/swappable-container';
-import { get, set } from '@ember/object';
+import { get } from '@ember/object';
 import { tryInvoke } from '@ember/utils';
 import { A } from '@ember/array';
 import { trySet } from '@ember/object';
+import { next } from '@ember/runloop';
 
 export default Component.extend({
     layout,
@@ -14,20 +15,32 @@ export default Component.extend({
                 item, index
             });
         },
-        swapped(item, index) {
+        swapped(item, index, container) {
             trySet(this, 'group.swappedItem', {
-                item, index
+                item, index, container
             });
         }
     },
     didInsertElement() {
         this._super(...arguments);
         get(this, 'group.swappable').addContainer(this.element);
-        set(this, 'initialItems', get(this, 'items').slice(0));
-        get(this, 'group.swappable').on('swappable:swapped', (event) => {
+        get(this, 'group.swappable').on('drag:stop',() => {
+            next(this, () => {
+                const scheduleReplaceEvent = get(this, 'scheduleReplace');
+                if (scheduleReplaceEvent) {
+                    const items = get(scheduleReplaceEvent, 'items');
+                    items.replace(get(scheduleReplaceEvent, 'index'), 1, [get(scheduleReplaceEvent, 'item')]);
+                    tryInvoke(this, 'itemAdded', [items, get(scheduleReplaceEvent, 'item'), event]);
+                    trySet(this, 'scheduleReplace', null);
+                }
+                trySet(this, 'group.dragItem', null);
+                trySet(this, 'group.swappedItem', null);
+            });
+        });
+        get(this, 'group.swappable').on('swappable:stop', (event) => {
             if (this.element) {
                 const items = A(get(this, 'items').toArray());
-                const targetContainer = get(event, 'data.dragEvent.data.overContainer');
+                const targetContainer = get(this, 'group.swappedItem.container');
                 const oldContainer = get(event, 'data.dragEvent.data.sourceContainer');
                 const itemMovedIndex = get(this, 'group.dragItem.index');
                 const itemMoved = get(this, 'group.dragItem.item');
@@ -38,13 +51,20 @@ export default Component.extend({
                     items.replace(itemSwappedIndex, 1, [itemMoved]);
                     items.replace(itemMovedIndex, 1, [itemSwapped]);
                     tryInvoke(this, 'itemReordered', [items, itemMoved, event]);
-                } else if (this.element.isSameNode(targetContainer)) { // added to this container
-                    items.replace(itemSwappedIndex, 1, [itemMoved]);
-                    tryInvoke(this, 'itemAdded', [items, itemMoved, event]);
-                } else if (this.element.isSameNode(oldContainer)) { // removed from this container
-                    items.replace(itemMovedIndex, 1, [itemSwapped]);
-                    tryInvoke(this, 'itemRemoved', [items, itemMoved, event]);
                 }
+                // else if (this.element.isSameNode(targetContainer)) { // added to this container
+                //     set(this, 'scheduleReplace', {
+                //         items,
+                //         index: itemSwappedIndex,
+                //         item: itemMoved
+                //     });
+                // } else if (this.element.isSameNode(oldContainer)) { // removed from this container
+                //     set(this, 'scheduleReplace', {
+                //         items,
+                //         index: itemMovedIndex,
+                //         item: itemSwapped
+                //     });
+                // }
             }
         });
     },
