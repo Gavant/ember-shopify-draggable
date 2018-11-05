@@ -1,9 +1,7 @@
 Changelog
 =========
 
-## 0.0.0
+## 0.1.0
 
-- Hold Your Horses,
-- Pack Your Parachutes,
-- We're Coming,
-- But we haven't released anything yet.
+Tracking JS objects passed into component.
+When you reorder the dom, the underlying JS objects get reordered as well
