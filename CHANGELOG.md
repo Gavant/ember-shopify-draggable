@@ -1,6 +1,12 @@
 Changelog
 =========
 
+## v0.1.3
+
+### Pull Requests
+
+- [#7](https://github.com/Gavant/ember-shopify-draggable/pull/7)  Adding github link in demo  *by [Gavant](https://github.com/Gavant)*
+
 ## v0.1.2
 
 ## 0.1.0
