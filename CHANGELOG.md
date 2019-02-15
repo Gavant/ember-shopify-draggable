@@ -1,6 +1,9 @@
 Changelog
 =========
 
+## v0.1.5
+Locked in ember-cli-es6-transform to be 0.0.5
+
 ## v0.1.4
 
 ### Pull Requests
