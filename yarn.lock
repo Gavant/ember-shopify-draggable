@@ -21,7 +21,7 @@
   dependencies:
     "@glimmer/di" "^0.2.0"
 
-"@shopify/draggable@^1.0.0-beta.8":
+"@shopify/draggable@1.0.0-beta.8":
   version "1.0.0-beta.8"
   resolved "http://artifactory.gavant.com:8081/artifactory/api/npm/npm-virtual/@shopify/draggable/-/draggable-1.0.0-beta.8.tgz#2eb3c2f72298ce3e53fe16f34ab124cc495cd4fc"
 
@@ -588,6 +588,12 @@ babel-plugin-ember-modules-api-polyfill@^2.5.0:
   resolved "http://artifactory.gavant.com:8081/artifactory/api/npm/npm-virtual/babel-plugin-ember-modules-api-polyfill/-/babel-plugin-ember-modules-api-polyfill-2.5.0.tgz#860aab9fecbf38c10d1fe0779c6979a854fff154"
   dependencies:
     ember-rfc176-data "^0.3.5"
+
+babel-plugin-ember-modules-api-polyfill@^2.6.0:
+  version "2.6.0"
+  resolved "http://artifactory.gavant.com:8081/artifactory/api/npm/npm-virtual/babel-plugin-ember-modules-api-polyfill/-/babel-plugin-ember-modules-api-polyfill-2.6.0.tgz#9524a65ef0c31ee82536a19c243fbaec1b977cbb"
+  dependencies:
+    ember-rfc176-data "^0.3.6"
 
 babel-plugin-eval@^1.0.1:
   version "1.0.1"
@@ -2305,6 +2311,24 @@ ember-assign-polyfill@~2.4.0:
     ember-cli-babel "^6.6.0"
     ember-cli-version-checker "^2.0.0"
 
+ember-cli-babel@6.18.0:
+  version "6.18.0"
+  resolved "http://artifactory.gavant.com:8081/artifactory/api/npm/npm-virtual/ember-cli-babel/-/ember-cli-babel-6.18.0.tgz#3f6435fd275172edeff2b634ee7b29ce74318957"
+  dependencies:
+    amd-name-resolver "1.2.0"
+    babel-plugin-debug-macros "^0.2.0-beta.6"
+    babel-plugin-ember-modules-api-polyfill "^2.6.0"
+    babel-plugin-transform-es2015-modules-amd "^6.24.0"
+    babel-polyfill "^6.26.0"
+    babel-preset-env "^1.7.0"
+    broccoli-babel-transpiler "^6.5.0"
+    broccoli-debug "^0.6.4"
+    broccoli-funnel "^2.0.0"
+    broccoli-source "^1.1.0"
+    clone "^2.0.0"
+    ember-cli-version-checker "^2.1.2"
+    semver "^5.5.0"
+
 ember-cli-babel@^5.1.5:
   version "5.2.8"
   resolved "http://artifactory.gavant.com:8081/artifactory/api/npm/npm-virtual/ember-cli-babel/-/ember-cli-babel-5.2.8.tgz#0356b03cc3fdff5d0f2ecaa46a0e1cfaebffd876"
@@ -2681,6 +2705,10 @@ ember-resolver@^4.0.0:
 ember-rfc176-data@^0.3.1, ember-rfc176-data@^0.3.3, ember-rfc176-data@^0.3.5:
   version "0.3.5"
   resolved "http://artifactory.gavant.com:8081/artifactory/api/npm/npm-virtual/ember-rfc176-data/-/ember-rfc176-data-0.3.5.tgz#f630e550572c81a5e5c7220f864c0f06eee9e977"
+
+ember-rfc176-data@^0.3.6:
+  version "0.3.6"
+  resolved "http://artifactory.gavant.com:8081/artifactory/api/npm/npm-virtual/ember-rfc176-data/-/ember-rfc176-data-0.3.6.tgz#7138db8dfccec39c9a832adfbd4c49d670028907"
 
 ember-router-generator@^1.2.3:
   version "1.2.3"

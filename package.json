@@ -20,8 +20,8 @@
     "test:all": "ember try:each"
   },
   "dependencies": {
-    "@shopify/draggable": "^1.0.0-beta.8",
-    "ember-cli-babel": "^6.6.0",
+    "@shopify/draggable": "1.0.0-beta.8",
+    "ember-cli-babel": "6.18.0",
     "ember-cli-es6-transform": "^0.0.5",
     "ember-cli-htmlbars": "^2.0.1"
   },
