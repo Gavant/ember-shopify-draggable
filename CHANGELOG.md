@@ -1,6 +1,12 @@
 Changelog
 =========
 
+## v0.1.4
+
+### Pull Requests
+
+- [#8](https://github.com/Gavant/ember-shopify-draggable/pull/8)  Babel issue  *by [Gavant](https://github.com/Gavant)*
+
 ## v0.1.3
 
 ### Pull Requests
