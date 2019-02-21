@@ -1,5 +1,4 @@
 import Component from '@ember/component';
-import { Sortable, Plugins } from 'draggable';
 import layout from '../templates/components/sortable-group';
 import { get, set, computed } from '@ember/object';
 import { tryInvoke } from '@ember/utils';
@@ -29,9 +28,11 @@ export default Component.extend({
             });
         });
     },
-    init() {
+    async initializeGroup() {
         //Default sortable group array to be null, these will be added when the sortable groups insert into the DOM
         if (!get(this, 'fastboot.isFastBoot')) {
+            const { Sortable, Plugins } = await import('@shopify/draggable');
+            // See https://github.com/ef4/ember-auto-import/issues/98
             const mirror = {
                 constrainDimensions: get(this, 'constrainDimensions')
             }
@@ -43,7 +44,9 @@ export default Component.extend({
             set(this, 'sortable', sortable);
             this.initializeEventListeners();
         }
-
+    },
+    init() {
+        this.initializeGroup();
         this._super(...arguments);
     },
     willDestroyElement() {

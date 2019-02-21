@@ -1,5 +1,4 @@
 import Component from '@ember/component';
-import { Swappable, Plugins } from 'draggable';
 import layout from '../templates/components/swappable-group';
 import { get, set, computed } from '@ember/object';
 import { A } from '@ember/array';
@@ -29,9 +28,10 @@ export default Component.extend({
             });
         });
     },
-    init() {
+    async initializeGroup() {
         //Default swappable group array to be null, these will be added when the sortable groups insert into the DOM
         if (!get(this, 'fastboot.isFastBoot')) {
+            const { Swappable, Plugins } = await import('@shopify/draggable');
             const mirror = {
                 constrainDimensions: get(this, 'constrainDimensions')
             }
@@ -43,7 +43,9 @@ export default Component.extend({
             set(this, 'swappable', swappable);
             this.initializeEventListeners();
         }
-
+    },
+    init() {
+        this.initializeGroup();
         this._super(...arguments);
     },
     willDestroyElement() {
