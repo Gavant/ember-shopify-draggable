@@ -19,12 +19,12 @@ module.exports = {
     return defaultTree ? new mergeTrees([defaultTree, browserVendorLib]) : browserVendorLib;
   },
 
-  included() {
+  included(app) {
     this._super.included.apply(this, arguments);
-    // app.import('vendor/draggable/draggable.bundle.js', {
-    //   using: [
-    //     { transformation: 'es6', as: 'draggable' }
-    //   ]
-    // });
+    app.import('vendor/draggable/draggable.bundle.js', {
+      using: [
+        { transformation: 'es6', as: 'draggable' }
+      ]
+    });
   }
 };

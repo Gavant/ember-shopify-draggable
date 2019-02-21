@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { Sortable, Plugins } from '@shopify/draggable';
+import { Sortable, Plugins } from 'draggable';
 import layout from '../templates/components/sortable-group';
 import { get, set, computed } from '@ember/object';
 import { tryInvoke } from '@ember/utils';
