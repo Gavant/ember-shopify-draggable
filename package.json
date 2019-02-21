@@ -1,9 +1,14 @@
 {
   "name": "ember-shopify-draggable",
   "version": "0.1.5",
-  "description": "The default blueprint for ember-cli addons.",
+  "description": "Drag and drop addon",
   "keywords": [
-    "ember-addon"
+    "ember-addon",
+    "drag",
+    "drop",
+    "dragdrop",
+    "draggable",
+    "shopify"
   ],
   "repository": "https://github.com/Gavant/ember-shopify-draggable",
   "license": "MIT",
