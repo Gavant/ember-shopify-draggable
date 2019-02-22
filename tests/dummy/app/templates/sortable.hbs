@@ -1,6 +1,11 @@
 <h1>Sortable</h1>
+<div>
+    Resize Mirror Element
+    {{input type="checkbox" checked=resizeMirror}}
+</div>
+
 <div class="containers">
-    {{#sortable-group as |group|}}
+    {{#sortable-group resizeMirror=resizeMirror as |group|}}
         <div class="sortable container-list">
             <header>
                 <h3>Container One</h3>

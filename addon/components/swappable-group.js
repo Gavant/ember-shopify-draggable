@@ -10,6 +10,7 @@ export default Component.extend({
     classNames: ['swappable-group'],
     swappable: null,
     constrainDimensions: true,
+    resizeMirror: false,
     events: A([
         'swap',
         'swapped',
@@ -32,13 +33,17 @@ export default Component.extend({
         //Default swappable group array to be null, these will be added when the sortable groups insert into the DOM
         if (!get(this, 'fastboot.isFastBoot')) {
             const { Swappable, Plugins } = await import('@shopify/draggable');
+            const plugins = A();
+            if (get(this, 'resizeMirror')) {
+                plugins.pushObject(Plugins.ResizeMirror);
+            }
             const mirror = {
                 constrainDimensions: get(this, 'constrainDimensions')
             }
             const swappable = new Swappable([], {
                 draggable: '.swappable-item',
                 mirror,
-                plugins: [Plugins.ResizeMirror]
+                plugins
             });
             set(this, 'swappable', swappable);
             this.initializeEventListeners();
