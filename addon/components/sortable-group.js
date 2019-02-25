@@ -4,8 +4,9 @@ import { get, setProperties, computed, observer } from '@ember/object';
 import { tryInvoke } from '@ember/utils';
 import { A } from '@ember/array';
 import { getOwner } from '@ember/application';
+import Evented from '@ember/object/evented';
 
-export default Component.extend({
+export default Component.extend(Evented, {
     layout,
     classNames: ['sortable-group'],
     sortable: null,
@@ -16,6 +17,11 @@ export default Component.extend({
         'sorted',
         'start',
         'stop'
+    ]),
+    _events: A([
+        'drag:start',
+        'drag:stop',
+        'sortable:stop'
     ]),
     resizeMirrorDidChange: observer('resizeMirror', function() {
         get(this, 'sortable')[`${get(this, 'resizeMirror') ? 'add' : 'remove'}Plugin`](get(this, 'plugins').ResizeMirror);
@@ -53,7 +59,15 @@ export default Component.extend({
                 sortable,
                 plugins: Plugins
             });
+            //Public Events
             this.initializeEventListeners();
+            //Private Events
+            get(this, '_events').forEach(eventName => {
+                sortable.on(eventName, (event) => {
+                    this.trigger(eventName, event);
+                });
+            });
+            this.trigger('setupContainers');
         }
     },
     init() {

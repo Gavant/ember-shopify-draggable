@@ -7,15 +7,18 @@ export default Component.extend({
     layout,
     classNames: ['sortable-item'],
     visible: false,
-    didInsertElement() {
+    _dragStart(event) {
+        const source = get(event, 'data.originalSource');
+        if (this.element && this.element.isSameNode(source)) {
+            tryInvoke(this, 'dragStart', [get(this, 'item')]);
+        }
+    },
+    init(){
         this._super(...arguments);
-
-        get(this, 'container.group.sortable').on('drag:start', (event) => {
-            const source = get(event, 'data.originalSource');
-            if (this.element && this.element.isSameNode(source)) {
-                tryInvoke(this, 'dragStart', [get(this, 'item')]);
-            }
-        });
+        get(this, 'container.group').on('drag:start', this, '_dragStart');
+    },
+    willDestroyElement(){
+        get(this, 'container.group').off('drag:start', this, '_dragStart');
     }
 }).reopenClass({
     positionalParams: ['item']

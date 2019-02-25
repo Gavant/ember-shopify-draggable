@@ -4,8 +4,9 @@ import { get, set, computed } from '@ember/object';
 import { A } from '@ember/array';
 import { tryInvoke } from '@ember/utils';
 import { getOwner } from '@ember/application';
+import Evented from '@ember/object/evented';
 
-export default Component.extend({
+export default Component.extend(Evented, {
     layout,
     classNames: ['swappable-group'],
     swappable: null,
@@ -16,6 +17,12 @@ export default Component.extend({
         'swapped',
         'start',
         'stop'
+    ]),
+    _events: A([
+        'drag:start',
+        'drag:stop',
+        'swappable:stop',
+        'swappable:swap'
     ]),
     fastboot: computed(function() {
         let owner = getOwner(this);
@@ -46,7 +53,15 @@ export default Component.extend({
                 plugins
             });
             set(this, 'swappable', swappable);
+            //Public Events
             this.initializeEventListeners();
+            //Private Events
+            get(this, '_events').forEach(eventName => {
+                swappable.on(eventName, (event) => {
+                    this.trigger(eventName, event);
+                });
+            });
+            this.trigger('setupContainers');
         }
     },
     init() {
