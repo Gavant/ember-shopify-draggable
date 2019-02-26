@@ -38,44 +38,38 @@ export default Component.extend(Evented, {
             });
         });
     },
-    async initializeGroup() {
-        //Default sortable group array to be null, these will be added when the sortable groups insert into the DOM
-        if (!get(this, 'fastboot.isFastBoot')) {
-            // See https://github.com/ef4/ember-auto-import/issues/98
-            const { Sortable, Plugins } = await import('@shopify/draggable');
-            const plugins = A();
-            if (get(this, 'resizeMirror')) {
-                plugins.pushObject(Plugins.ResizeMirror);
-            }
-            const mirror = {
-                constrainDimensions: get(this, 'constrainDimensions')
-            }
-            const sortable = new Sortable([], {
-                draggable: '.sortable-item',
-                mirror,
-                plugins,
-            });
-            setProperties(this, {
-                sortable,
-                plugins: Plugins
-            });
-            //Public Events
-            this.initializeEventListeners();
-            //Private Events
-            get(this, '_events').forEach(eventName => {
-                sortable.on(eventName, (event) => {
-                    this.trigger(eventName, event);
-                });
-            });
-            this.trigger('setupContainers');
-        }
-    },
-    init() {
-        this.initializeGroup();
+    async didInsertElement() {
         this._super(...arguments);
+        // See https://github.com/ef4/ember-auto-import/issues/98
+        const { Sortable, Plugins } = await import('@shopify/draggable');
+        const plugins = A();
+        if (get(this, 'resizeMirror')) {
+            plugins.pushObject(Plugins.ResizeMirror);
+        }
+        const mirror = {
+            constrainDimensions: get(this, 'constrainDimensions')
+        }
+        const sortable = new Sortable([], {
+            draggable: '.sortable-item',
+            mirror,
+            plugins,
+        });
+        setProperties(this, {
+            sortable,
+            plugins: Plugins
+        });
+        //Public Events
+        this.initializeEventListeners();
+        //Private Events
+        get(this, '_events').forEach(eventName => {
+            sortable.on(eventName, (event) => {
+                this.trigger(eventName, event);
+            });
+        });
+        this.trigger('setupContainers');
     },
     willDestroyElement() {
-        get(this, 'sortable').destroy();
         this._super(...arguments);
+        get(this, 'sortable').destroy();
     }
 });

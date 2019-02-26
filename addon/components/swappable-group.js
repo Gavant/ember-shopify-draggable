@@ -36,37 +36,31 @@ export default Component.extend(Evented, {
             });
         });
     },
-    async initializeGroup() {
-        //Default swappable group array to be null, these will be added when the sortable groups insert into the DOM
-        if (!get(this, 'fastboot.isFastBoot')) {
-            const { Swappable, Plugins } = await import('@shopify/draggable');
-            const plugins = A();
-            if (get(this, 'resizeMirror')) {
-                plugins.pushObject(Plugins.ResizeMirror);
-            }
-            const mirror = {
-                constrainDimensions: get(this, 'constrainDimensions')
-            }
-            const swappable = new Swappable([], {
-                draggable: '.swappable-item',
-                mirror,
-                plugins
-            });
-            set(this, 'swappable', swappable);
-            //Public Events
-            this.initializeEventListeners();
-            //Private Events
-            get(this, '_events').forEach(eventName => {
-                swappable.on(eventName, (event) => {
-                    this.trigger(eventName, event);
-                });
-            });
-            this.trigger('setupContainers');
-        }
-    },
-    init() {
-        this.initializeGroup();
+    async didInsertElement() {
         this._super(...arguments);
+        const { Swappable, Plugins } = await import('@shopify/draggable');
+        const plugins = A();
+        if (get(this, 'resizeMirror')) {
+            plugins.pushObject(Plugins.ResizeMirror);
+        }
+        const mirror = {
+            constrainDimensions: get(this, 'constrainDimensions')
+        }
+        const swappable = new Swappable([], {
+            draggable: '.swappable-item',
+            mirror,
+            plugins
+        });
+        set(this, 'swappable', swappable);
+        //Public Events
+        this.initializeEventListeners();
+        //Private Events
+        get(this, '_events').forEach(eventName => {
+            swappable.on(eventName, (event) => {
+                this.trigger(eventName, event);
+            });
+        });
+        this.trigger('setupContainers');
     },
     willDestroyElement() {
         get(this, 'swappable').destroy();
