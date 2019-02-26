@@ -1,18 +1,31 @@
 {
   "name": "ember-shopify-draggable",
   "version": "0.1.5",
-  "description": "Drag and drop addon",
+  "description": "Ember components for Shopify's drag and drop",
   "keywords": [
     "ember-addon",
+    "ember",
     "drag",
     "drop",
     "dragdrop",
     "draggable",
-    "shopify"
+    "shopify",
+    "gavant"
   ],
-  "repository": "https://github.com/Gavant/ember-shopify-draggable",
+  "homepage": "https://github.com/Gavant/ember-shopify-draggable#usage",
+  "bugs": {
+    "url": "https://github.com/Gavant/ember-shopify-draggable/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Gavant/ember-shopify-draggable.git"
+  },
   "license": "MIT",
-  "author": "",
+  "author": "Gavant Software",
+  "contributors": [
+    "Adam Baker <abaker@gavant.com>",
+    "Bill Dami <bdami@gavant.com>"
+  ],
   "directories": {
     "doc": "doc",
     "test": "tests"
