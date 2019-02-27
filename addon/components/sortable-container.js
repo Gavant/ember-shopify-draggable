@@ -57,9 +57,19 @@ export default Component.extend(Evented, {
             }
         }
     },
+    didInsertElement() {
+        this._super(...arguments);
+        //if the element is inserted into the dom and group sortable already exists, we can just add the container to the sortable group
+        if (get(this, 'group.sortable')) {
+            this.setupSortableContainer();
+        }
+    },
     init(){
         this._super(...arguments);
+        //This event is just for the first setup, when sortable doesn't exist yet. This item will be rendered, and then sortable will be imported.
+        //Once sortable is imported we send this event to hook everything up
         get(this, 'group').on('setupContainers', this, 'setupSortableContainer');
+
         get(this, 'group').on('drag:stop', this, '_dragStop');
         get(this, 'group').on('sortable:stop', this, '_sortableStop');
     },
