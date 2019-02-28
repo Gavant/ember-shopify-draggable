@@ -26,6 +26,9 @@
             transition: color .12s cubic-bezier(.64,0,.35,1),background-color .12s cubic-bezier(.64,0,.35,1);
             transition: color .12s cubic-bezier(.64,0,.35,1),background-color .12s cubic-bezier(.64,0,.35,1);
 
+            &.draggable-mirror {
+                z-index: 9999;
+            }
             &.draggable-mirror,
             &:hover {
                 color: $color;

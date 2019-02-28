@@ -13,11 +13,11 @@ export default Controller.extend({
         { name: "Item 6" }
     ]),
     actions: {
-        swapped(event) {
-            console.log('swapped');
+        swapped() {
+
         },
-        sorted(event) {
-            console.log('sorted');
+        sorted() {
+
         }
     }
 });
