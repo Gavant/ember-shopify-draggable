@@ -1,6 +1,12 @@
 Changelog
 =========
 
+## v0.2.0
+
+### Pull Requests
+
+- [#9](https://github.com/Gavant/ember-shopify-draggable/pull/9)  LGTM 🚀  *by [Gavant](https://github.com/Gavant)*
+
 ## v0.1.5
 Locked in ember-cli-es6-transform to be 0.0.5
 
