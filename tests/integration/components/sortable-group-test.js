@@ -88,6 +88,7 @@ module('Integration | Component | sortable-group', function(hooks) {
     const origSecondItem = origItems[1];
     const origFirstItemText = origFirstItem.textContent.trim();
     const origSecondItemText = origSecondItem.textContent.trim();
+
     clickMouse(origFirstItem);
     //the drag event waits for a configured delay before proceeding
     //so we must wait until that `delay` is elapsed before continuing
