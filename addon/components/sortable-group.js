@@ -12,6 +12,12 @@ export default Component.extend(Evented, {
     sortable: null,
     constrainDimensions: true,
     resizeMirror: false,
+
+    // Draggable options
+    // https://github.com/Shopify/draggable/tree/master/src/Draggable#options
+    delay: 100,
+    handle: null,
+
     events: A([
         'sort',
         'sorted',
@@ -51,8 +57,10 @@ export default Component.extend(Evented, {
         }
         const sortable = new Sortable([], {
             draggable: '.sortable-item',
+            delay: get(this, 'delay'),
+            handle: get(this, 'handle'),
             mirror,
-            plugins,
+            plugins
         });
         setProperties(this, {
             sortable,
@@ -70,6 +78,8 @@ export default Component.extend(Evented, {
     },
     willDestroyElement() {
         this._super(...arguments);
-        get(this, 'sortable').destroy();
+        if (get(this, 'sortable')) {
+            get(this, 'sortable').destroy();
+        }
     }
 });
