@@ -1,6 +1,12 @@
 Changelog
 =========
 
+## v0.2.1
+
+### Pull Requests
+
+- [#11](https://github.com/Gavant/ember-shopify-draggable/pull/11) Improve test coverage *by [Gavant](https://github.com/Gavant)*
+
 ## v0.2.0
 
 ### Pull Requests
