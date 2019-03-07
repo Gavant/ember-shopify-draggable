@@ -75,10 +75,12 @@ export default Component.extend(Evented, {
     },
     willDestroyElement() {
         this._super(...arguments);
-        get(this, 'group').off('setupContainers', this, 'setupSortableContainer');
-        get(this, 'group').off('drag:stop', this, '_dragStop');
-        get(this, 'group').off('sortable:stop', this, '_sortableStop');
-        this.destroySortableContainer();
+        if(get(this, 'group')) {
+            get(this, 'group').off('setupContainers', this, 'setupSortableContainer');
+            get(this, 'group').off('drag:stop', this, '_dragStop');
+            get(this, 'group').off('sortable:stop', this, '_sortableStop');
+            this.destroySortableContainer();
+        }
     },
     actions: {
         dragStart(item) {

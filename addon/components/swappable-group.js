@@ -63,7 +63,9 @@ export default Component.extend(Evented, {
         this.trigger('setupContainers');
     },
     willDestroyElement() {
-        get(this, 'swappable').destroy();
+        if(get(this, 'swappable')) {
+            get(this, 'swappable').destroy();
+        }
         this._super(...arguments);
     }
 });

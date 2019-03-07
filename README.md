@@ -6,7 +6,7 @@ Addon for using @shopify/draggable in ember projects.
 ![Doggie](https://media1.tenor.com/images/237857b4502f6d15cccbd58c5ca05257/tenor.gif?itemid=3501646)
 
 
-- [X] Easy to use 
+- [X] Easy to use
 - [X] Fastboot Compatible (doesn't run in fastboot)
 - [X] Easily Extendable
 
@@ -30,7 +30,7 @@ Right now this addon contains ember components for `swappable` and `sortable`. W
 
 ### Sortable functionality
 This addon allows you to pass in a list object to the container component, and an item object to the item component.
-This will give you the ability to keep track of the underlying JS list automatically. You can see an example of this below. 
+This will give you the ability to keep track of the underlying JS list automatically. You can see an example of this below.
 
 Here we pass in list which is an array of js objects, and give `item` to each `container.item`. When any action is performed
 the `group.container` component sends an action and you can just have it mutate the list. So each time the list is modified by drag/drop
@@ -69,8 +69,19 @@ Possible events for sortable can be found at [Sortable Events](https://shopify.g
 
 You can see an example of the `sorted` event being used above.
 
+#### Sortable Options
+You can customize several of the underlying `Sortable` instance's options by passing in additional properties to the `{{sortable-group}}` component.
+
+* `delay` - (default: `100`) adds a delay to the drag interaction when a sortable item is clicked.
+* `handle` - (default: `null`) a CSS selector for a handle element within the sortable item elements if you don't want to allow dragging from anywhere on the entire item element.
+
+For more details on these options see:  
+https://github.com/Shopify/draggable/tree/master/src/Draggable#options
+
+**NOTE:** These options do not support dynamically changing values, and will only respect the initial value that is passed in when the component is first rendered.
+
 ### Swappable functionality
-NOTE: Currently only works with one container
+**NOTE:** Currently only works with one container
 ```
 {{#swappable-group swapped=(action 'swapped') as |group|}}
     {{#group.container list
