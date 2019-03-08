@@ -1,6 +1,12 @@
 Changelog
 =========
 
+## v0.2.2
+
+### Pull Requests
+
+- [#12](https://github.com/Gavant/ember-shopify-draggable/pull/12) Setup Travis CI *by [Gavant](https://github.com/Gavant)*
+
 ## v0.2.1
 
 ### Pull Requests

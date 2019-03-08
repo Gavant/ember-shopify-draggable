@@ -1,6 +1,6 @@
 {
   "name": "ember-shopify-draggable",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Ember components for Shopify's drag and drop",
   "keywords": [
     "ember-addon",
