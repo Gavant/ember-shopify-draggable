@@ -3,6 +3,7 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { A } from '@ember/array';
+import { run } from '@ember/runloop';
 import { clickMouse, moveMouse, releaseMouse, waitFor } from '../../helpers/mouse-events';
 
 module('Integration | Component | sortable-group', function(hooks) {
@@ -90,12 +91,14 @@ module('Integration | Component | sortable-group', function(hooks) {
       const firstItem = items[0];
       const secondItem = items[1];
 
-      clickMouse(firstItem);
-      //the drag event waits for a configured delay before proceeding
-      //so we must wait until that `delay` is elapsed before continuing
-      await waitFor(1);
-      moveMouse(secondItem);
-      releaseMouse(this.get('sortable.source'));
+      run(this, async () => {
+          clickMouse(firstItem);
+          //the drag event waits for a configured delay before proceeding
+          //so we must wait until that `delay` is elapsed before continuing
+          await waitFor(1);
+          moveMouse(secondItem);
+          releaseMouse(this.get('sortable.source'));
+      });
   });
 
   test('Dragging items between containers triggers actions', async function(assert) {
@@ -145,10 +148,12 @@ module('Integration | Component | sortable-group', function(hooks) {
       const firstItem = items[0];
       const thirdItem = items[2];
 
-      clickMouse(firstItem);
-      await waitFor(1);
-      moveMouse(thirdItem);
-      releaseMouse(this.get('sortable.source'));
+      run(this, async () => {
+          clickMouse(firstItem);
+          await waitFor(1);
+          moveMouse(thirdItem);
+          releaseMouse(this.get('sortable.source'));
+      });
   });
 
   test('Dragging items reorders the list', async function(assert) {
@@ -182,17 +187,19 @@ module('Integration | Component | sortable-group', function(hooks) {
     const origFirstItemText = origFirstItem.textContent.trim();
     const origSecondItemText = origSecondItem.textContent.trim();
 
-    clickMouse(origFirstItem);
-    await waitFor(1);
-    moveMouse(origSecondItem);
-    releaseMouse(this.get('sortable.source'));
+    run(this, async () => {
+        clickMouse(origFirstItem);
+        await waitFor(1);
+        moveMouse(origSecondItem);
+        releaseMouse(this.get('sortable.source'));
 
-    const newItems = this.element.querySelectorAll('.sortable-item');
-    const newFirstItemText = newItems[0].textContent.trim();
-    const newSecondItemText = newItems[1].textContent.trim();
+        const newItems = this.element.querySelectorAll('.sortable-item');
+        const newFirstItemText = newItems[0].textContent.trim();
+        const newSecondItemText = newItems[1].textContent.trim();
 
-    assert.equal(origFirstItemText, newSecondItemText, 'the first item is now the second item in the DOM');
-    assert.equal(origSecondItemText, newFirstItemText, 'the second item is now the first item in the DOM');
-    assert.equal(this.get('list.firstObject.name'), 'Item 2', 'the original list array has been updated');
+        assert.equal(origFirstItemText, newSecondItemText, 'the first item is now the second item in the DOM');
+        assert.equal(origSecondItemText, newFirstItemText, 'the second item is now the first item in the DOM');
+        assert.equal(this.get('list.firstObject.name'), 'Item 2', 'the original list array has been updated');
+    });
   });
 });

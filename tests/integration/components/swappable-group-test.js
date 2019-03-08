@@ -3,6 +3,7 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { A } from '@ember/array';
+import { run } from '@ember/runloop';
 import { clickMouse, moveMouse, releaseMouse, waitFor } from '../../helpers/mouse-events';
 
 module('Integration | Component | swappable-group', function(hooks) {
@@ -90,10 +91,12 @@ module('Integration | Component | swappable-group', function(hooks) {
     const origFirstItem = origItems[0];
     const origSecondItem = origItems[1];
 
-    clickMouse(origFirstItem);
-    await waitFor(1);
-    moveMouse(origSecondItem);
-    releaseMouse(this.get('swappable.source'));
+    run(this, async () => {
+        clickMouse(origFirstItem);
+        await waitFor(1);
+        moveMouse(origSecondItem);
+        releaseMouse(this.get('swappable.source'));
+    });
   });
 
   test('Dragging items swap them', async function(assert) {
@@ -124,17 +127,20 @@ module('Integration | Component | swappable-group', function(hooks) {
     const origSecondItem = origItems[1];
     const origFirstItemText = origFirstItem.textContent.trim();
     const origSecondItemText = origSecondItem.textContent.trim();
-    clickMouse(origFirstItem);
-    await waitFor(1);
-    moveMouse(origSecondItem);
-    releaseMouse(this.get('swappable.source'));
 
-    const newItems = this.element.querySelectorAll('.swappable-item');
-    const newFirstItemText = newItems[0].textContent.trim();
-    const newSecondItemText = newItems[1].textContent.trim();
+    run(this, async () => {
+        clickMouse(origFirstItem);
+        await waitFor(1);
+        moveMouse(origSecondItem);
+        releaseMouse(this.get('swappable.source'));
 
-    assert.equal(origFirstItemText, newSecondItemText, 'the first item is now the second item in the DOM');
-    assert.equal(origSecondItemText, newFirstItemText, 'the second item is now the first item in the DOM');
-    assert.equal(this.get('list.firstObject.name'), 'Item 2', 'the original list array has been updated');
+        const newItems = this.element.querySelectorAll('.swappable-item');
+        const newFirstItemText = newItems[0].textContent.trim();
+        const newSecondItemText = newItems[1].textContent.trim();
+
+        assert.equal(origFirstItemText, newSecondItemText, 'the first item is now the second item in the DOM');
+        assert.equal(origSecondItemText, newFirstItemText, 'the second item is now the first item in the DOM');
+        assert.equal(this.get('list.firstObject.name'), 'Item 2', 'the original list array has been updated');
+    });
   });
 });
