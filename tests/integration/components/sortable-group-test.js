@@ -43,7 +43,9 @@ module('Integration | Component | sortable-group', function(hooks) {
             {{#group.container list
                 itemReordered=(action (mut list))
                 itemAdded=(action (mut list))
-                itemRemoved=(action (mut list)) as |container|}}
+                itemRemoved=(action (mut list))
+                as |container|
+            }}
                 {{#each container.items as |item|}}
                     {{#container.item item}}
                         {{item.name}}
@@ -56,6 +58,97 @@ module('Integration | Component | sortable-group', function(hooks) {
     );
 
     assert.equal(this.element.textContent.trim(), 'Item 1');
+  });
+
+  test('Reordering items triggers actions', async function(assert) {
+      assert.expect(2);
+
+      this.set('itemReorderedAction', () => { assert.ok(true, 'itemReordered action fired'); });
+      this.set('sortedAction', () => { assert.ok(true, 'sorted action fired'); });
+
+      this.set('list', A([
+          { name: "Item 1" },
+          { name: "Item 2" }
+      ]));
+
+      await render(hbs`
+          {{#sortable-group delay=0 sortable=sortable sorted=(action sortedAction) as |group|}}
+              {{#group.container list
+                  itemReordered=(action itemReorderedAction)
+                  as |container|
+              }}
+                  {{#each container.items as |item|}}
+                      {{#container.item item}}
+                          {{item.name}}
+                      {{/container.item}}
+                  {{/each}}
+              {{/group.container}}
+          {{/sortable-group}}`
+      );
+
+      const items = this.element.querySelectorAll('.sortable-item');
+      const firstItem = items[0];
+      const secondItem = items[1];
+
+      clickMouse(firstItem);
+      //the drag event waits for a configured delay before proceeding
+      //so we must wait until that `delay` is elapsed before continuing
+      await waitFor(1);
+      moveMouse(secondItem);
+      releaseMouse(this.get('sortable.source'));
+  });
+
+  test('Dragging items between containers triggers actions', async function(assert) {
+      assert.expect(2);
+
+      this.set('itemAddedAction', () => { assert.ok(true, 'itemAdded action fired'); });
+      this.set('itemRemovedAction', () => { assert.ok(true, 'itemRemoved action fired'); });
+
+      this.set('listOne', A([
+          { name: "Item 1" },
+          { name: "Item 2" }
+      ]));
+
+      this.set('listTwo', A([
+          { name: "Item 3" },
+          { name: "Item 4" }
+      ]));
+
+      await render(hbs`
+          {{#sortable-group delay=0 sortable=sortable as |group|}}
+              {{#group.container listOne
+                  itemAdded=(action itemAddedAction)
+                  itemRemoved=(action itemRemovedAction)
+                  as |container|
+              }}
+                  {{#each container.items as |item|}}
+                      {{#container.item item}}
+                          {{item.name}}
+                      {{/container.item}}
+                  {{/each}}
+              {{/group.container}}
+              {{#group.container listTwo
+                  itemAdded=(action itemAddedAction)
+                  itemRemoved=(action itemRemovedAction)
+                  as |container|
+              }}
+                  {{#each container.items as |item|}}
+                      {{#container.item item}}
+                          {{item.name}}
+                      {{/container.item}}
+                  {{/each}}
+              {{/group.container}}
+          {{/sortable-group}}`
+      );
+
+      const items = this.element.querySelectorAll('.sortable-item');
+      const firstItem = items[0];
+      const thirdItem = items[2];
+
+      clickMouse(firstItem);
+      await waitFor(1);
+      moveMouse(thirdItem);
+      releaseMouse(this.get('sortable.source'));
   });
 
   test('Dragging items reorders the list', async function(assert) {
@@ -90,8 +183,6 @@ module('Integration | Component | sortable-group', function(hooks) {
     const origSecondItemText = origSecondItem.textContent.trim();
 
     clickMouse(origFirstItem);
-    //the drag event waits for a configured delay before proceeding
-    //so we must wait until that `delay` is elapsed before continuing
     await waitFor(1);
     moveMouse(origSecondItem);
     releaseMouse(this.get('sortable.source'));

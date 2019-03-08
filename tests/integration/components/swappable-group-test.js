@@ -3,6 +3,7 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { A } from '@ember/array';
+import { clickMouse, moveMouse, releaseMouse, waitFor } from '../../helpers/mouse-events';
 
 module('Integration | Component | swappable-group', function(hooks) {
   setupRenderingTest(hooks);
@@ -16,9 +17,8 @@ module('Integration | Component | swappable-group', function(hooks) {
         {{#swappable-group as |group|}}
             {{#group.container list
                 itemReordered=(action (mut list))
-                itemAdded=(action (mut list))
-                itemRemoved=(action (mut list))
-                as |container|}}
+                as |container|
+            }}
                     {{#each container.items as |item index|}}
                         {{#container.item item index=index}}
                             {{item.name}}
@@ -44,9 +44,8 @@ module('Integration | Component | swappable-group', function(hooks) {
         {{#swappable-group as |group|}}
             {{#group.container list
                 itemReordered=(action (mut list))
-                itemAdded=(action (mut list))
-                itemRemoved=(action (mut list))
-                as |container|}}
+                as |container|
+            }}
                     {{#each container.items as |item index|}}
                         {{#container.item item index=index}}
                             {{item.name}}
@@ -59,5 +58,83 @@ module('Integration | Component | swappable-group', function(hooks) {
     );
 
     assert.equal(this.element.textContent.trim(), 'Item 1');
+  });
+
+  test('Dragging items fires actions', async function(assert) {
+    assert.expect(2);
+
+    this.set('itemReorderedAction', () => { assert.ok(true, 'itemReordered action fired'); });
+    this.set('swappedAction', () => { assert.ok(true, 'swapped action fired'); });
+
+    this.set('list', A([
+        { name: "Item 1" },
+        { name: "Item 2" }
+    ]));
+
+    await render(hbs`
+        {{#swappable-group delay=0 swappable=swappable swapped=(action swappedAction) as |group|}}
+            {{#group.container list
+                itemReordered=(action itemReorderedAction)
+                as |container|
+            }}
+                    {{#each container.items as |item index|}}
+                        {{#container.item item index=index}}
+                            {{item.name}}
+                        {{/container.item}}
+                    {{/each}}
+            {{/group.container}}
+        {{/swappable-group}}`
+    );
+
+    const origItems = this.element.querySelectorAll('.swappable-item');
+    const origFirstItem = origItems[0];
+    const origSecondItem = origItems[1];
+
+    clickMouse(origFirstItem);
+    await waitFor(1);
+    moveMouse(origSecondItem);
+    releaseMouse(this.get('swappable.source'));
+  });
+
+  test('Dragging items swap them', async function(assert) {
+    assert.expect(3);
+
+    this.set('list', A([
+        { name: "Item 1" },
+        { name: "Item 2" }
+    ]));
+
+    await render(hbs`
+        {{#swappable-group delay=0 swappable=swappable as |group|}}
+            {{#group.container list
+                itemReordered=(action (mut list))
+                as |container|
+            }}
+                    {{#each container.items as |item index|}}
+                        {{#container.item item index=index}}
+                            {{item.name}}
+                        {{/container.item}}
+                    {{/each}}
+            {{/group.container}}
+        {{/swappable-group}}`
+    );
+
+    const origItems = this.element.querySelectorAll('.swappable-item');
+    const origFirstItem = origItems[0];
+    const origSecondItem = origItems[1];
+    const origFirstItemText = origFirstItem.textContent.trim();
+    const origSecondItemText = origSecondItem.textContent.trim();
+    clickMouse(origFirstItem);
+    await waitFor(1);
+    moveMouse(origSecondItem);
+    releaseMouse(this.get('swappable.source'));
+
+    const newItems = this.element.querySelectorAll('.swappable-item');
+    const newFirstItemText = newItems[0].textContent.trim();
+    const newSecondItemText = newItems[1].textContent.trim();
+
+    assert.equal(origFirstItemText, newSecondItemText, 'the first item is now the second item in the DOM');
+    assert.equal(origSecondItemText, newFirstItemText, 'the second item is now the first item in the DOM');
+    assert.equal(this.get('list.firstObject.name'), 'Item 2', 'the original list array has been updated');
   });
 });

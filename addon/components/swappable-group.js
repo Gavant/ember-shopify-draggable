@@ -12,6 +12,12 @@ export default Component.extend(Evented, {
     swappable: null,
     constrainDimensions: true,
     resizeMirror: false,
+
+    // Draggable options
+    // https://github.com/Shopify/draggable/tree/master/src/Draggable#options
+    delay: 100,
+    handle: null,
+
     events: A([
         'swap',
         'swapped',
@@ -48,6 +54,8 @@ export default Component.extend(Evented, {
         }
         const swappable = new Swappable([], {
             draggable: '.swappable-item',
+            delay: get(this, 'delay'),
+            handle: get(this, 'handle'),
             mirror,
             plugins
         });
