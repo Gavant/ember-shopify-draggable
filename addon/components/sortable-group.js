@@ -4,7 +4,6 @@ import { get, setProperties, observer } from '@ember/object';
 import { tryInvoke } from '@ember/utils';
 import { A } from '@ember/array';
 import Evented from '@ember/object/evented';
-import { run } from '@ember/runloop';
 
 export default Component.extend(Evented, {
     layout,
@@ -35,9 +34,9 @@ export default Component.extend(Evented, {
     initializeEventListeners() {
         const sortable = get(this, 'sortable');
         get(this, 'events').forEach(eventName => {
-            sortable.on(`sortable:${eventName}`, (event) => run(() => {
+            sortable.on(`sortable:${eventName}`, (event) => {
                 tryInvoke(this, eventName, [event]);
-            }));
+            });
         });
     },
     async didInsertElement() {
@@ -66,9 +65,9 @@ export default Component.extend(Evented, {
         this.initializeEventListeners();
         //Private Events
         get(this, '_events').forEach(eventName => {
-            sortable.on(eventName, (event) => run(() => {
+            sortable.on(eventName, (event) => {
                 this.trigger(eventName, event);
-            }));
+            });
         });
         this.trigger('setupContainers');
     },
