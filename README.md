@@ -1,4 +1,6 @@
 [![Build Status](https://travis-ci.org/Gavant/ember-shopify-draggable.svg?branch=master)](https://travis-ci.org/Gavant/ember-shopify-draggable)
+[![npm version](https://badge.fury.io/js/ember-shopify-draggable.svg)](https://badge.fury.io/js/ember-shopify-draggable)
+[![Ember Observer Score](http://emberobserver.com/badges/ember-shopify-draggable.svg)](http://emberobserver.com/addons/ember-shopify-draggable)
 
 ember-shopify-draggable
 ==============================================================================
