@@ -1,10 +1,10 @@
 import Component from '@ember/component';
 import layout from '../templates/components/sortable-group';
-import { get, setProperties, computed, observer } from '@ember/object';
+import { get, setProperties, observer } from '@ember/object';
 import { tryInvoke } from '@ember/utils';
 import { A } from '@ember/array';
-import { getOwner } from '@ember/application';
 import Evented from '@ember/object/evented';
+import { run } from '@ember/runloop';
 
 export default Component.extend(Evented, {
     layout,
@@ -32,16 +32,12 @@ export default Component.extend(Evented, {
     resizeMirrorDidChange: observer('resizeMirror', function() {
         get(this, 'sortable')[`${get(this, 'resizeMirror') ? 'add' : 'remove'}Plugin`](get(this, 'plugins').ResizeMirror);
     }),
-    fastboot: computed(function() {
-        let owner = getOwner(this);
-        return owner.lookup('service:fastboot');
-    }),
     initializeEventListeners() {
         const sortable = get(this, 'sortable');
         get(this, 'events').forEach(eventName => {
-            sortable.on(`sortable:${eventName}`, (event) => {
+            sortable.on(`sortable:${eventName}`, (event) => run(() => {
                 tryInvoke(this, eventName, [event]);
-            });
+            }));
         });
     },
     async didInsertElement() {
@@ -70,9 +66,9 @@ export default Component.extend(Evented, {
         this.initializeEventListeners();
         //Private Events
         get(this, '_events').forEach(eventName => {
-            sortable.on(eventName, (event) => {
+            sortable.on(eventName, (event) => run(() => {
                 this.trigger(eventName, event);
-            });
+            }));
         });
         this.trigger('setupContainers');
     },
