@@ -1,9 +1,8 @@
 import Component from '@ember/component';
 import layout from '../templates/components/swappable-group';
-import { get, set, computed } from '@ember/object';
+import { get, set } from '@ember/object';
 import { A } from '@ember/array';
 import { tryInvoke } from '@ember/utils';
-import { getOwner } from '@ember/application';
 import Evented from '@ember/object/evented';
 
 export default Component.extend(Evented, {
@@ -12,6 +11,12 @@ export default Component.extend(Evented, {
     swappable: null,
     constrainDimensions: true,
     resizeMirror: false,
+
+    // Draggable options
+    // https://github.com/Shopify/draggable/tree/master/src/Draggable#options
+    delay: 100,
+    handle: null,
+
     events: A([
         'swap',
         'swapped',
@@ -24,10 +29,6 @@ export default Component.extend(Evented, {
         'swappable:stop',
         'swappable:swap'
     ]),
-    fastboot: computed(function() {
-        let owner = getOwner(this);
-        return owner.lookup('service:fastboot');
-    }),
     initializeEventListeners() {
         const swappable = get(this, 'swappable');
         get(this, 'events').forEach(eventName => {
@@ -48,6 +49,8 @@ export default Component.extend(Evented, {
         }
         const swappable = new Swappable([], {
             draggable: '.swappable-item',
+            delay: get(this, 'delay'),
+            handle: get(this, 'handle'),
             mirror,
             plugins
         });

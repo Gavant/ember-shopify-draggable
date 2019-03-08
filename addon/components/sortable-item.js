@@ -13,11 +13,11 @@ export default Component.extend({
             tryInvoke(this, 'dragStart', [get(this, 'item')]);
         }
     },
-    init(){
+    init() {
         this._super(...arguments);
         get(this, 'container.group').on('drag:start', this, '_dragStart');
     },
-    willDestroyElement(){
+    willDestroyElement() {
         get(this, 'container.group').off('drag:start', this, '_dragStart');
     }
 }).reopenClass({

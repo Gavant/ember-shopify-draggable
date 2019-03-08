@@ -12,10 +12,14 @@ export default Component.extend(Evented, {
     classNames: ['sortable-container'],
     items: null,
     setupSortableContainer() {
-        get(this, 'group.sortable').addContainer(this.element);
+        if(get(this, 'group.sortable')) {
+            get(this, 'group.sortable').addContainer(this.element);
+        }
     },
     destroySortableContainer() {
-        get(this, 'group.sortable').removeContainer(this.element);
+        if(get(this, 'group.sortable')) {
+            get(this, 'group.sortable').removeContainer(this.element);
+        }
     },
     _dragStop() {
         next(this, () => {
@@ -60,9 +64,7 @@ export default Component.extend(Evented, {
     didInsertElement() {
         this._super(...arguments);
         //if the element is inserted into the dom and group sortable already exists, we can just add the container to the sortable group
-        if (get(this, 'group.sortable')) {
-            this.setupSortableContainer();
-        }
+        this.setupSortableContainer();
     },
     init(){
         this._super(...arguments);

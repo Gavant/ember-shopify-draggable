@@ -1,9 +1,8 @@
 import Component from '@ember/component';
 import layout from '../templates/components/sortable-group';
-import { get, setProperties, computed, observer } from '@ember/object';
+import { get, setProperties, observer } from '@ember/object';
 import { tryInvoke } from '@ember/utils';
 import { A } from '@ember/array';
-import { getOwner } from '@ember/application';
 import Evented from '@ember/object/evented';
 
 export default Component.extend(Evented, {
@@ -31,10 +30,6 @@ export default Component.extend(Evented, {
     ]),
     resizeMirrorDidChange: observer('resizeMirror', function() {
         get(this, 'sortable')[`${get(this, 'resizeMirror') ? 'add' : 'remove'}Plugin`](get(this, 'plugins').ResizeMirror);
-    }),
-    fastboot: computed(function() {
-        let owner = getOwner(this);
-        return owner.lookup('service:fastboot');
     }),
     initializeEventListeners() {
         const sortable = get(this, 'sortable');

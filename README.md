@@ -1,3 +1,7 @@
+[![Build Status](https://travis-ci.org/Gavant/ember-shopify-draggable.svg?branch=master)](https://travis-ci.org/Gavant/ember-shopify-draggable)
+[![npm version](https://badge.fury.io/js/ember-shopify-draggable.svg)](https://badge.fury.io/js/ember-shopify-draggable)
+[![Ember Observer Score](http://emberobserver.com/badges/ember-shopify-draggable.svg)](http://emberobserver.com/addons/ember-shopify-draggable)
+
 ember-shopify-draggable
 ==============================================================================
 
@@ -7,7 +11,7 @@ Addon for using @shopify/draggable in ember projects.
 
 
 - [X] Easy to use
-- [X] Fastboot Compatible (doesn't run in fastboot)
+- [X] FastBoot Compatible
 - [X] Easily Extendable
 
 Demo
@@ -69,17 +73,6 @@ Possible events for sortable can be found at [Sortable Events](https://shopify.g
 
 You can see an example of the `sorted` event being used above.
 
-#### Sortable Options
-You can customize several of the underlying `Sortable` instance's options by passing in additional properties to the `{{sortable-group}}` component.
-
-* `delay` - (default: `100`) adds a delay to the drag interaction when a sortable item is clicked.
-* `handle` - (default: `null`) a CSS selector for a handle element within the sortable item elements if you don't want to allow dragging from anywhere on the entire item element.
-
-For more details on these options see:  
-https://github.com/Shopify/draggable/tree/master/src/Draggable#options
-
-**NOTE:** These options do not support dynamically changing values, and will only respect the initial value that is passed in when the component is first rendered.
-
 ### Swappable functionality
 **NOTE:** Currently only works with one container
 ```
@@ -101,6 +94,17 @@ https://github.com/Shopify/draggable/tree/master/src/Draggable#options
 Possible events for swappable can be found at [Swappable Events](https://shopify.github.io/draggable/docs/identifiers.html#swappable-swappableevent)
 
 You can see an example of the `swapped` event being used above.
+
+### Sortable & Swappable Options
+You can customize several of the underlying `Sortable` or `Swappable` instances' options by passing in additional properties to the `{{sortable-group}}` and `{{swappable-group}}` components.
+
+* `delay` - (default: `100`) adds a delay to the drag interaction when a sortable item is clicked.
+* `handle` - (default: `null`) a CSS selector for a handle element within the sortable item elements if you don't want to allow dragging from anywhere on the entire item element.
+
+For more details on these options see:  
+https://github.com/Shopify/draggable/tree/master/src/Draggable#options
+
+**NOTE:** These options do not support dynamically changing values, and will only respect the initial value that is passed in when the component is first rendered.
 
 
 Contributing
