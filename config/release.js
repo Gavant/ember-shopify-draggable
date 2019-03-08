@@ -2,6 +2,7 @@
 'use strict';
 
 const { execSync } = require('child_process');
+/* eslint-disable node/no-unpublished-require */
 const generateChangelog = require('ember-cli-changelog/lib/tasks/release-with-changelog');
 
 module.exports = {
