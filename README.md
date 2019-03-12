@@ -69,6 +69,42 @@ your passed in list will be updated with those changes!
 {{/sortable-group}}
 ```
 
+Angle bracket component style (Ember v3.4+)
+```
+<SortableGroup @sorted={{action 'sorted'}} as |Group|>
+    <Group.container
+        @items={{this.list}}
+        @itemReordered={{action (mut list)}}
+        @itemAdded={{action (mut list)}}
+        @itemRemoved={{action (mut list)}}
+        as |Container|
+    >
+        {{#each Container.items as |item|}}
+            <Container.item @item={{item}}>
+                {{item.name}}
+            </Container.item>
+        {{else}}
+            Im empty
+        {{/each}}
+    </Group.container>
+    <Group.container
+        @items={{this.listTwo}}
+        @itemReordered={{action (mut listTwo)}}
+        @itemAdded={{action (mut listTwo)}}
+        @itemRemoved={{action (mut listTwo)}}
+        as |container|
+    >
+        {{#each Container.items as |item|}}
+            <Container.item @item={{item}}>
+                {{item.name}}
+            </Container.item>
+        {{else}}
+            Im Empty
+        {{/each}}
+    </Group.container>
+</SortableGroup>
+```
+
 Possible events for sortable can be found at [Sortable Events](https://shopify.github.io/draggable/docs/identifiers.html#sortable-sortableevent)
 
 You can see an example of the `sorted` event being used above.
@@ -89,6 +125,25 @@ You can see an example of the `sorted` event being used above.
             {{/each}}
     {{/group.container}}
 {{/swappable-group}}
+```
+
+Angle bracket component style (Ember v3.4+)
+```
+<SwappableGroup @swapped=(action 'swapped') as |Group|}}
+    <Group.container
+        @items={{this.list}}
+        @itemReordered={{action (mut list)}}
+        as |Container|
+    >
+        {{#each Container.items as |item index|}}
+            <Container.item @item={{item}} @index={{index}}>
+                {{item.name}}
+            </Container.item>
+        {{else}}
+            Im empty
+        {{/each}}
+    </Group.container>
+</SwappableGroup>
 ```
 
 Possible events for swappable can be found at [Swappable Events](https://shopify.github.io/draggable/docs/identifiers.html#swappable-swappableevent)
