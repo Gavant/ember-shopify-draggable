@@ -40,7 +40,7 @@ Here we pass in list which is an array of js objects, and give `item` to each `c
 the `group.container` component sends an action and you can just have it mutate the list. So each time the list is modified by drag/drop
 your passed in list will be updated with those changes!
 
-```
+```handlebars
 {{#sortable-group sorted=(action 'sorted') as |group|}}
     {{#group.container list
         itemReordered=(action (mut list))
@@ -70,7 +70,7 @@ your passed in list will be updated with those changes!
 ```
 
 Angle bracket component style (Ember v3.4+)
-```
+```handlebars
 <SortableGroup @sorted={{action 'sorted'}} as |Group|>
     <Group.container
         @items={{this.list}}
@@ -111,7 +111,7 @@ You can see an example of the `sorted` event being used above.
 
 ### Swappable functionality
 **NOTE:** Currently only works with one container
-```
+```handlebars
 {{#swappable-group swapped=(action 'swapped') as |group|}}
     {{#group.container list
         itemReordered=(action (mut list))
@@ -128,7 +128,7 @@ You can see an example of the `sorted` event being used above.
 ```
 
 Angle bracket component style (Ember v3.4+)
-```
+```handlebars
 <SwappableGroup @swapped=(action 'swapped') as |Group|}}
     <Group.container
         @items={{this.list}}
