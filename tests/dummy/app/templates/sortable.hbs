@@ -5,57 +5,66 @@
 </div>
 
 <div class="containers">
-    {{#sortable-group resizeMirror=resizeMirror as |group|}}
+    <SortableGroup @resizeMirror={{resizeMirror}} as |Group|>
         <div class="sortable container-list">
             <header>
                 <h3>Container One</h3>
             </header>
-            {{#group.container list
-                itemReordered=(action (mut list))
-                itemAdded=(action (mut list))
-                itemRemoved=(action (mut list)) as |container|}}
-                    {{#each container.items as |item|}}
-                        {{#container.item item}}
+            <Group.container
+                @items={{list}}
+                @itemReordered={{action (mut list)}}
+                @itemAdded={{action (mut list)}}
+                @itemRemoved={{action (mut list)}}
+                as |Container|
+            >
+                    {{#each Container.items as |item|}}
+                        <Container.item @item={{item}}>
                             {{item.name}}
-                        {{/container.item}}
+                        </Container.item>
                     {{else}}
                         Im empty
                     {{/each}}
-            {{/group.container}}
+            </Group.container>
         </div>
         <div class="sortable container-list">
             <header>
                 <h3>Container Two</h3>
             </header>
-            {{#group.container listTwo
-                itemReordered=(action (mut listTwo))
-                itemAdded=(action (mut listTwo))
-                itemRemoved=(action (mut listTwo)) as |container|}}
-                    {{#each container.items as |item|}}
-                        {{#container.item item}}
+            <Group.container
+                @items={{listTwo}}
+                @itemReordered={{action (mut listTwo)}}
+                @itemAdded={{action (mut listTwo)}}
+                @itemRemoved={{action (mut listTwo)}}
+                as |Container|
+            >
+                    {{#each Container.items as |item|}}
+                        <Container.item @item={{item}}>
                             {{item.name}}
-                        {{/container.item}}
+                        </Container.item>
                     {{else}}
                         Im Empty
                     {{/each}}
-            {{/group.container}}
+            </Group.container>
         </div>
         <div class="sortable container-list">
             <header>
                 <h3>Container Three</h3>
             </header>
-            {{#group.container listThree
-                itemReordered=(action (mut listThree))
-                itemAdded=(action (mut listThree))
-                itemRemoved=(action (mut listThree)) as |container|}}
-                    {{#each container.items as |item|}}
-                        {{#container.item item}}
+            <Group.container
+                @items={{listThree}}
+                @itemReordered={{action (mut listThree)}}
+                @itemAdded={{action (mut listThree)}}
+                @itemRemoved={{action (mut listThree)}}
+                as |Container|
+            >
+                    {{#each Container.items as |item|}}
+                        <Container.item @item={{item}}>
                             {{item.name}}
-                        {{/container.item}}
+                        </Container.item>
                     {{else}}
                         Im Empty
                     {{/each}}
-            {{/group.container}}
+            </Group.container>
         </div>
-    {{/sortable-group}}
+    </SortableGroup>
 </div>
