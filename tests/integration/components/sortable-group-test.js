@@ -72,7 +72,7 @@ module('Integration | Component | sortable-group', function(hooks) {
       ]));
 
       await render(hbs`
-          {{#sortable-group delay=0 sortable=sortable sorted=(action sortedAction) as |group|}}
+          {{#sortable-group delay=0 sortable=sortable sortableActions=(hash sorted=(action sortedAction)) as |group|}}
               {{#group.container list
                   itemReordered=(action itemReorderedAction)
                   as |container|

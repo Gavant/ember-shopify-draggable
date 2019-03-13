@@ -1,23 +1,16 @@
 import Component from '@ember/component';
 import layout from '../templates/components/swappable-group';
-import { get, set } from '@ember/object';
+import { get, setProperties } from '@ember/object';
+import { alias } from '@ember/object/computed';
 import { A } from '@ember/array';
-import { tryInvoke } from '@ember/utils';
-import Evented from '@ember/object/evented';
+import BaseGroupMixin from '../mixins/base-group';
 
-export default Component.extend(Evented, {
+export default Component.extend(BaseGroupMixin, {
     layout,
     classNames: ['swappable-group'],
     swappable: null,
-    constrainDimensions: true,
-    resizeMirror: false,
-
-    // Draggable options
-    // https://github.com/Shopify/draggable/tree/master/src/Draggable#options
-    delay: 100,
-    handle: null,
-
-    events: A([
+    shopifyInstance: alias('swappable'),
+    swappableEvents: A([
         'swap',
         'swapped',
         'start',
@@ -29,13 +22,9 @@ export default Component.extend(Evented, {
         'swappable:stop',
         'swappable:swap'
     ]),
-    initializeEventListeners() {
-        const swappable = get(this, 'swappable');
-        get(this, 'events').forEach(eventName => {
-            swappable.on(`swappable:${eventName}`, (event) => {
-                tryInvoke(this, eventName, [event]);
-            });
-        });
+    initializePublicEventListeners() {
+        this._super(...arguments);
+        this.bindEventListenersType('swappable');
     },
     async didInsertElement() {
         this._super(...arguments);
@@ -44,25 +33,28 @@ export default Component.extend(Evented, {
         if (get(this, 'resizeMirror')) {
             plugins.pushObject(Plugins.ResizeMirror);
         }
-        const mirror = {
-            constrainDimensions: get(this, 'constrainDimensions')
+        if (get(this, 'snappable')) {
+            plugins.pushObject(Plugins.Snappable);
+        }
+        if (get(this, 'collidable')) {
+            plugins.pushObject(Plugins.Collidable);
         }
         const swappable = new Swappable([], {
             draggable: '.swappable-item',
             delay: get(this, 'delay'),
             handle: get(this, 'handle'),
-            mirror,
+            mirror: get(this, 'mirrorOptions'),
+            collidables: get(this, 'collidables'),
             plugins
         });
-        set(this, 'swappable', swappable);
-        //Public Events
-        this.initializeEventListeners();
-        //Private Events
-        get(this, '_events').forEach(eventName => {
-            swappable.on(eventName, (event) => {
-                this.trigger(eventName, event);
-            });
+        setProperties(this, {
+            swappable,
+            plugins: Plugins
         });
+        //Public Events
+        this.initializePublicEventListeners();
+        //Private Events
+        this.initializePrivateEventListeners();
         this.trigger('setupContainers');
     },
     willDestroyElement() {

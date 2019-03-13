@@ -1,11 +1,64 @@
 <h1>Sortable</h1>
-<div>
-    Resize Mirror Element
-    {{input type="checkbox" checked=resizeMirror}}
-</div>
-
-<div class="containers">
-    {{#sortable-group resizeMirror=resizeMirror as |group|}}
+<p>
+    <label class="checkbox-inline">
+        {{input type="checkbox" checked=logEvents}} Log Events
+    </label>
+    <label class="checkbox-inline">
+        {{input type="checkbox" checked=resizeMirror}} ResizeMirror Plugin
+    </label>
+    <label class="checkbox-inline">
+        {{input type="checkbox" checked=snappable}} Snappable Plugin
+    </label>
+    <label class="checkbox-inline">
+        {{input type="checkbox" checked=swapAnimation}} SwapAnimation Plugin
+    </label>
+    <label class="checkbox-inline">
+        {{input type="checkbox" checked=collidable}} Collidable Plugin
+    </label>
+</p>
+{{#if logEvents}}
+    <div class="alert alert-info">Open your browser's console to see events being fired as you drag and drop.</div>
+{{/if}}
+{{#if collidable}}
+    <div class="alert alert-info">You won't be able to drag items directly over elements that are hghlighted in red.</div>
+{{/if}}
+<div class="containers {{if collidable 'collidable-enabled'}}">
+    {{#sortable-group
+        resizeMirror=resizeMirror
+        snappable=snappable
+        collidable=collidable
+        collidables=collidables
+        swapAnimation=swapAnimation
+        swapAnimationOptions=(hash
+            horizontal=true
+            duration=250
+        )
+        mirrorOptions=(hash
+            constrainDimensions=true
+        )
+        sortableActions=(hash
+            start=(action "sortableStart")
+            sort=(action "sortableSort")
+            sorted=(action "sortableSorted")
+            stop=(action "sortableStop")
+        )
+        dragActions=(hash
+            start=(action "dragStart")
+            move=(action "dragMove")
+            over=(action "dragOver")
+            out=(action "dragOut")
+            stop=(action "dragStop")
+        )
+        snapActions=(hash
+            in=(action "snapIn")
+            out=(action "snapOut")
+        )
+        collidableActions=(hash
+            in=(action "collidableIn")
+            out=(action "collidableOut")
+        )
+        as |group|
+    }}
         <div class="sortable container-list">
             <header>
                 <h3>Container One</h3>

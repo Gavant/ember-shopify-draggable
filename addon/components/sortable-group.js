@@ -1,23 +1,17 @@
 import Component from '@ember/component';
 import layout from '../templates/components/sortable-group';
-import { get, setProperties, observer } from '@ember/object';
-import { tryInvoke } from '@ember/utils';
+import { get, setProperties } from '@ember/object';
+import { alias } from '@ember/object/computed';
 import { A } from '@ember/array';
-import Evented from '@ember/object/evented';
 
-export default Component.extend(Evented, {
+import BaseGroupMixin from '../mixins/base-group';
+
+export default Component.extend(BaseGroupMixin, {
     layout,
     classNames: ['sortable-group'],
     sortable: null,
-    constrainDimensions: true,
-    resizeMirror: false,
-
-    // Draggable options
-    // https://github.com/Shopify/draggable/tree/master/src/Draggable#options
-    delay: 100,
-    handle: null,
-
-    events: A([
+    shopifyInstance: alias('sortable'),
+    sortableEvents: A([
         'sort',
         'sorted',
         'start',
@@ -28,16 +22,9 @@ export default Component.extend(Evented, {
         'drag:stop',
         'sortable:stop'
     ]),
-    resizeMirrorDidChange: observer('resizeMirror', function() {
-        get(this, 'sortable')[`${get(this, 'resizeMirror') ? 'add' : 'remove'}Plugin`](get(this, 'plugins').ResizeMirror);
-    }),
-    initializeEventListeners() {
-        const sortable = get(this, 'sortable');
-        get(this, 'events').forEach(eventName => {
-            sortable.on(`sortable:${eventName}`, (event) => {
-                tryInvoke(this, eventName, [event]);
-            });
-        });
+    initializePublicEventListeners() {
+        this._super(...arguments);
+        this.bindEventListenersType('sortable');
     },
     async didInsertElement() {
         this._super(...arguments);
@@ -47,14 +34,22 @@ export default Component.extend(Evented, {
         if (get(this, 'resizeMirror')) {
             plugins.pushObject(Plugins.ResizeMirror);
         }
-        const mirror = {
-            constrainDimensions: get(this, 'constrainDimensions')
+        if (get(this, 'snappable')) {
+            plugins.pushObject(Plugins.Snappable);
+        }
+        if (get(this, 'swapAnimation')) {
+            plugins.pushObject(Plugins.SwapAnimation);
+        }
+        if (get(this, 'collidable')) {
+            plugins.pushObject(Plugins.Collidable);
         }
         const sortable = new Sortable([], {
             draggable: '.sortable-item',
             delay: get(this, 'delay'),
             handle: get(this, 'handle'),
-            mirror,
+            mirror: get(this, 'mirrorOptions'),
+            swapAnimation: get(this, 'swapAnimationOptions'),
+            collidables: get(this, 'collidables'),
             plugins
         });
         setProperties(this, {
@@ -62,19 +57,15 @@ export default Component.extend(Evented, {
             plugins: Plugins
         });
         //Public Events
-        this.initializeEventListeners();
+        this.initializePublicEventListeners();
         //Private Events
-        get(this, '_events').forEach(eventName => {
-            sortable.on(eventName, (event) => {
-                this.trigger(eventName, event);
-            });
-        });
+        this.initializePrivateEventListeners();
         this.trigger('setupContainers');
     },
     willDestroyElement() {
-        this._super(...arguments);
         if (get(this, 'sortable')) {
             get(this, 'sortable').destroy();
         }
+        this._super(...arguments);
     }
 });
