@@ -1,0 +1,36 @@
+<h1>Draggable &amp; Droppable</h1>
+<p>
+    <label class="checkbox-inline">
+        {{input type="checkbox" checked=logEvents}} Log Events
+    </label>
+    <label class="checkbox-inline">
+        {{input type="checkbox" checked=snappable}} Snappable Plugin
+    </label>
+</p>
+{{#if logEvents}}
+    <div class="alert alert-info">Open your browser's console to see events being fired as you drag and drop.</div>
+{{/if}}
+<div class="containers">
+    {{#draggable-group
+        snappable=snappable
+        dragActions=(hash
+            start=(action "dragStart")
+            move=(action "dragMove")
+            over=(action "dragOver")
+            out=(action "dragOut")
+            stop=(action "dragStop")
+        )
+        as |group|
+    }}
+        <div class="draggable container-list">
+            <header>
+                <h3>Container</h3>
+            </header>
+            {{#group.container as |container|}}
+                {{#container.item}}Item 1{{/container.item}}
+                {{#container.item}}Item 2{{/container.item}}
+                {{#container.item}}Item 3{{/container.item}}
+            {{/group.container}}
+        </div>
+    {{/draggable-group}}
+</div>

@@ -8,8 +8,7 @@ import BaseGroupMixin from '../mixins/base-group';
 export default Component.extend(BaseGroupMixin, {
     layout,
     classNames: ['swappable-group'],
-    swappable: null,
-    shopifyInstance: alias('swappable'),
+    swappable: alias('shopifyInstance'),
     swappableEvents: A([
         'swap',
         'swapped',
@@ -39,7 +38,7 @@ export default Component.extend(BaseGroupMixin, {
         if (get(this, 'collidable')) {
             plugins.pushObject(Plugins.Collidable);
         }
-        const swappable = new Swappable([], {
+        const shopifyInstance = new Swappable([], {
             draggable: '.swappable-item',
             delay: get(this, 'delay'),
             handle: get(this, 'handle'),
@@ -48,7 +47,7 @@ export default Component.extend(BaseGroupMixin, {
             plugins
         });
         setProperties(this, {
-            swappable,
+            shopifyInstance,
             plugins: Plugins
         });
         //Public Events
@@ -56,11 +55,5 @@ export default Component.extend(BaseGroupMixin, {
         //Private Events
         this.initializePrivateEventListeners();
         this.trigger('setupContainers');
-    },
-    willDestroyElement() {
-        if(get(this, 'swappable')) {
-            get(this, 'swappable').destroy();
-        }
-        this._super(...arguments);
     }
 });

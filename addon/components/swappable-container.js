@@ -5,16 +5,11 @@ import { tryInvoke } from '@ember/utils';
 import { A } from '@ember/array';
 import { trySet } from '@ember/object';
 import { next } from '@ember/runloop';
+import BaseContainerMixin from '../mixins/base-container';
 
-export default Component.extend({
+export default Component.extend(BaseContainerMixin, {
     layout,
     classNames: ['swappable-container'],
-    setupSwappableContainer() {
-        get(this, 'group.swappable').addContainer(this.element);
-    },
-    destroySwappableContainer() {
-        get(this, 'group.swappable').removeContainer(this.element);
-    },
     _dragStop() {
         next(this, () => {
             const scheduleReplaceEvent = get(this, 'scheduleReplace');
@@ -60,16 +55,17 @@ export default Component.extend({
     },
     init(){
         this._super(...arguments);
-        get(this, 'group').on('setupContainers', this, 'setupSwappableContainer');
-        get(this, 'group').on('drag:stop', this, '_dragStop');
-        get(this, 'group').on('swappable:stop', this, '_swappableStop');
+        if(get(this, 'group')) {
+            get(this, 'group').on('drag:stop', this, '_dragStop');
+            get(this, 'group').on('swappable:stop', this, '_swappableStop');
+        }
     },
     willDestroyElement() {
+        if(get(this, 'group')) {
+            get(this, 'group').off('drag:stop', this, '_dragStop');
+            get(this, 'group').off('swappable:stop', this, '_swappableStop');
+        }
         this._super(...arguments);
-        get(this, 'group').off('setupContainers', this, 'setupSwappableContainer');
-        get(this, 'group').off('drag:stop', this, '_dragStop');
-        get(this, 'group').off('swappable:stop', this, '_swappableStop');
-        this.destroySwappableContainer();
     },
     actions: {
         dragStart(item, index) {

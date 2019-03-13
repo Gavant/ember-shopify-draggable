@@ -4,9 +4,9 @@ import { A } from '@ember/array';
 
 export default Controller.extend({
     logEvents: false,
-    resizeMirror: true,
+    resizeMirror: false,
     snappable: false,
-    swapAnimation: true,
+    swapAnimation: false,
     collidable: false,
     collidables: '.container-list > header',
     list: A([

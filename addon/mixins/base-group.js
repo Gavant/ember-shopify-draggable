@@ -6,6 +6,8 @@ import { tryInvoke } from '@ember/utils';
 import { A } from '@ember/array';
 
 export default Mixin.create(Evented, {
+    shopifyInstance: null,
+
     //plugins
     resizeMirror: false,
     snappable: false,
@@ -99,4 +101,12 @@ export default Mixin.create(Evented, {
         const actions = get(this, `${namespace}Actions`);
         tryInvoke(actions, eventName, [event]);
     },
+
+    willDestroyElement() {
+        if(get(this, 'shopifyInstance')) {
+            get(this, 'shopifyInstance').destroy();
+        }
+
+        this._super(...arguments);
+    }
 });

@@ -1,6 +1,50 @@
 <h1>Swappable</h1>
-<div class="containers">
-    {{#swappable-group as |group|}}
+<p>
+    <label class="checkbox-inline">
+        {{input type="checkbox" checked=logEvents}} Log Events
+    </label>
+    <label class="checkbox-inline">
+        {{input type="checkbox" checked=snappable}} Snappable Plugin
+    </label>
+    <label class="checkbox-inline">
+        {{input type="checkbox" checked=collidable}} Collidable Plugin
+    </label>
+</p>
+{{#if logEvents}}
+    <div class="alert alert-info">Open your browser's console to see events being fired as you drag and drop.</div>
+{{/if}}
+{{#if collidable}}
+    <div class="alert alert-info">You won't be able to drag items directly over elements that are hghlighted in red.</div>
+{{/if}}
+<div class="containers {{if collidable 'collidable-enabled'}}">
+    {{#swappable-group
+        snappable=snappable
+        swapAnimation=swapAnimation
+        collidable=collidable
+        collidables=collidables
+        swappableActions=(hash
+            start=(action "swappableStart")
+            swap=(action "swappableSwap")
+            swapped=(action "swappableSwapped")
+            stop=(action "swappableStop")
+        )
+        dragActions=(hash
+            start=(action "dragStart")
+            move=(action "dragMove")
+            over=(action "dragOver")
+            out=(action "dragOut")
+            stop=(action "dragStop")
+        )
+        snapActions=(hash
+            in=(action "snapIn")
+            out=(action "snapOut")
+        )
+        collidableActions=(hash
+            in=(action "collidableIn")
+            out=(action "collidableOut")
+        )
+        as |group|
+    }}
         <div class="swappable container-list">
             <header>
                 <h3>Container</h3>
