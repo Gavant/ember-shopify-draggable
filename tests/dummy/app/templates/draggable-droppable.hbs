@@ -24,7 +24,7 @@
     }}
         <div class="draggable container-list">
             <header>
-                <h3>Container</h3>
+                <h3>Draggable Container</h3>
             </header>
             {{#group.container as |container|}}
                 {{#container.item}}Item 1{{/container.item}}
@@ -33,4 +33,36 @@
             {{/group.container}}
         </div>
     {{/draggable-group}}
+    {{#droppable-group
+        snappable=snappable
+        dragActions=(hash
+            start=(action "dragStart")
+            move=(action "dragMove")
+            over=(action "dragOver")
+            out=(action "dragOut")
+            stop=(action "dragStop")
+        )
+        droppableActions=(hash
+            dropped=(action "droppableDropped")
+            returned=(action "droppableReturned")
+        )
+        as |group|
+    }}
+        <div class="draggable container-list">
+            <header>
+                <h3>Droppable Container</h3>
+            </header>
+            {{#group.container as |container|}}
+                {{#container.dropzone as |dropzone|}}
+                    {{#dropzone.item}}Item 1{{/dropzone.item}}
+                {{/container.dropzone}}
+                {{#container.dropzone as |dropzone|}}
+                    {{#dropzone.item}}Item 2{{/dropzone.item}}
+                {{/container.dropzone}}
+                {{#container.dropzone as |dropzone|}}
+                    {{!-- dropzone is starting out empty --}}
+                {{/container.dropzone}}
+            {{/group.container}}
+        </div>
+    {{/droppable-group}}
 </div>

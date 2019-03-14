@@ -31,6 +31,14 @@ export default Controller.extend({
 
         dragStop(event) {
             this.logEvent('drag:stop', event);
+        },
+
+        droppableDropped(event) {
+            this.logEvent('droppable:dropped', event);
+        },
+
+        droppableReturned(event) {
+            this.logEvent('droppable:returned', event);
         }
     }
 });

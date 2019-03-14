@@ -3,15 +3,15 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Component | draggable-item', function(hooks) {
+module('Integration | Component | droppable-group', function(hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function(assert) {
     // Template block usage:
     await render(hbs`
-      {{#draggable-item}}
+      {{#droppable-group}}
         template block text
-      {{/draggable-item}}
+      {{/droppable-group}}
     `);
 
     assert.equal(this.element.textContent.trim(), 'template block text');
