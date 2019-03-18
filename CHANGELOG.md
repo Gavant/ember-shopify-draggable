@@ -1,6 +1,15 @@
 Changelog
 =========
 
+## v0.3.0
+
+### Pull Requests
+
+- [#13](https://github.com/Gavant/ember-shopify-draggable/pull/16) Draggables and droppables *by [Gavant](https://github.com/Gavant)*
+  - Add components for `Draggable` and `Droppable`
+  - Add support for rest of plugins
+  - Expose all events fired by the shopify modules
+
 ## v0.2.2
 
 ### Pull Requests
