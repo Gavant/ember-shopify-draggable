@@ -5,22 +5,12 @@ import { tryInvoke } from '@ember/utils';
 import { A } from '@ember/array';
 import { next } from '@ember/runloop';
 import { trySet } from '@ember/object';
-import Evented from '@ember/object/evented';
+import BaseContainerMixin from '../mixins/base-container';
 
-export default Component.extend(Evented, {
+export default Component.extend(BaseContainerMixin, {
     layout,
     classNames: ['sortable-container'],
     items: null,
-    setupSortableContainer() {
-        if(get(this, 'group.sortable')) {
-            get(this, 'group.sortable').addContainer(this.element);
-        }
-    },
-    destroySortableContainer() {
-        if(get(this, 'group.sortable')) {
-            get(this, 'group.sortable').removeContainer(this.element);
-        }
-    },
     _dragStop() {
         next(this, () => {
             const items = get(this, 'items');
@@ -64,25 +54,21 @@ export default Component.extend(Evented, {
     didInsertElement() {
         this._super(...arguments);
         //if the element is inserted into the dom and group sortable already exists, we can just add the container to the sortable group
-        this.setupSortableContainer();
+        this.setupContainer();
     },
     init(){
         this._super(...arguments);
-        //This event is just for the first setup, when sortable doesn't exist yet. This item will be rendered, and then sortable will be imported.
-        //Once sortable is imported we send this event to hook everything up
-        get(this, 'group').on('setupContainers', this, 'setupSortableContainer');
-
-        get(this, 'group').on('drag:stop', this, '_dragStop');
-        get(this, 'group').on('sortable:stop', this, '_sortableStop');
+        if(get(this, 'group')) {
+            get(this, 'group').on('drag:stop', this, '_dragStop');
+            get(this, 'group').on('sortable:stop', this, '_sortableStop');
+        }
     },
     willDestroyElement() {
-        this._super(...arguments);
         if(get(this, 'group')) {
-            get(this, 'group').off('setupContainers', this, 'setupSortableContainer');
             get(this, 'group').off('drag:stop', this, '_dragStop');
             get(this, 'group').off('sortable:stop', this, '_sortableStop');
-            this.destroySortableContainer();
         }
+        this._super(...arguments);
     },
     actions: {
         dragStart(item) {

@@ -9,6 +9,7 @@ const Router = EmberRouter.extend({
 Router.map(function() {
   this.route('sortable');
   this.route('swappable');
+  this.route('draggable-droppable');
 });
 
 export default Router;

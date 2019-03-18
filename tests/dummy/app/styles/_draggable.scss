@@ -1,0 +1,71 @@
+.draggable.container-list {
+    grid-area: b;
+    flex-direction: column;
+    margin-top: 2rem;
+    header {
+        width: 100%;
+        background-color: #000;
+        color: #FFF;
+        padding: 2rem;
+    }
+    .draggable-container {
+        min-height: 25rem;
+    }
+    .draggable-container,
+    .droppable-container {
+        flex-direction: column;
+        background-image: repeating-linear-gradient(-45deg,#FFF,#FFF 40%,#000 0,#000 50%,#FFF 0);
+        background-size: .8rem .8rem;
+        position: relative;
+        color: #212529;
+        box-shadow: inset 0 0 0 .6rem #000;
+        display: flex;
+        .draggable-item {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1.6rem;
+            color: currentColor;
+            background-color: #fafbfc;
+            border: .6rem solid currentColor;
+            transition: color .12s cubic-bezier(.64,0,.35,1),background-color .12s cubic-bezier(.64,0,.35,1);
+
+            &.draggable-mirror,
+            &:hover {
+                color: $color;
+            }
+        }
+        .droppable-dropzone {
+            padding: 1rem;
+            min-height: 8.4rem;
+            position: relative;
+        }
+
+        &.draggable-container--is-dragging {
+            .droppable-dropzone {
+                &:after {
+                    content: "Drop it here!";
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    color: #fff;
+                    font-size: 2rem;
+                    font-weight: bold;
+                    background: rgba(green, 0.6);
+                }
+
+                &.draggable-dropzone--occupied {
+                    &:after {
+                        display: none;
+                    }
+                }
+            }
+        }
+    }
+}

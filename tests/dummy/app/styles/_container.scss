@@ -1,0 +1,35 @@
+$grid-columns: 8;
+$height: 20.6rem;
+$color: #285a92;
+
+.containers {
+    display: grid;
+    grid-gap: .8rem;
+    grid-template-columns: 100%;
+    grid-template-areas: "a" "b" "c";
+    @media screen and (min-width: get-breakpoint(desktop)) {
+        grid-template-columns: repeat($grid-columns, 1fr);
+        grid-template-areas:
+        'a a a a a a a a'
+        'b b b b b c c c';
+    }
+
+    &.collidable-enabled {
+        .container-list > header {
+            background-color: #c70000;
+            background-image: linear-gradient(
+                45deg,
+                rgba(255,255,255,.15) 10%, transparent 10%,
+                transparent 20%, rgba(255,255,255,.15) 20%,
+                rgba(255,255,255,.15) 30%, transparent 30%,
+                transparent 40%, rgba(255,255,255,.15) 40%,
+                rgba(255,255,255,.15) 50%, transparent 50%,
+                transparent 60%, rgba(255,255,255,.15) 60%,
+                rgba(255,255,255,.15) 70%, transparent 70%,
+                transparent 80%, rgba(255,255,255,.15) 80%,
+                rgba(255,255,255,.15) 90%, transparent 90%,
+                transparent
+            );
+        }
+    }
+}

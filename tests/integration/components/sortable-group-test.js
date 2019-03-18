@@ -72,7 +72,7 @@ module('Integration | Component | sortable-group', function(hooks) {
       ]));
 
       await render(hbs`
-          {{#sortable-group delay=0 sortable=sortable sorted=(action sortedAction) as |group|}}
+          {{#sortable-group delay=0 shopifyInstance=sortable sortableActions=(hash sorted=(action sortedAction)) as |group|}}
               {{#group.container list
                   itemReordered=(action itemReorderedAction)
                   as |container|
@@ -115,7 +115,7 @@ module('Integration | Component | sortable-group', function(hooks) {
       ]));
 
       await render(hbs`
-          {{#sortable-group delay=0 sortable=sortable as |group|}}
+          {{#sortable-group delay=0 shopifyInstance=sortable as |group|}}
               {{#group.container listOne
                   itemAdded=(action itemAddedAction)
                   itemRemoved=(action itemRemovedAction)
@@ -160,7 +160,7 @@ module('Integration | Component | sortable-group', function(hooks) {
     ]));
 
     await render(hbs`
-        {{#sortable-group delay=0 sortable=sortable as |group|}}
+        {{#sortable-group delay=0 shopifyInstance=sortable as |group|}}
             {{#group.container list
                 itemReordered=(action (mut list))
                 itemAdded=(action (mut list))

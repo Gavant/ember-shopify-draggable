@@ -72,7 +72,7 @@ module('Integration | Component | swappable-group', function(hooks) {
     ]));
 
     await render(hbs`
-        {{#swappable-group delay=0 swappable=swappable swapped=(action swappedAction) as |group|}}
+        {{#swappable-group delay=0 shopifyInstance=swappable swappableActions=(hash swapped=(action swappedAction)) as |group|}}
             {{#group.container list
                 itemReordered=(action itemReorderedAction)
                 as |container|
@@ -105,7 +105,7 @@ module('Integration | Component | swappable-group', function(hooks) {
     ]));
 
     await render(hbs`
-        {{#swappable-group delay=0 swappable=swappable as |group|}}
+        {{#swappable-group delay=0 shopifyInstance=swappable as |group|}}
             {{#group.container list
                 itemReordered=(action (mut list))
                 as |container|
