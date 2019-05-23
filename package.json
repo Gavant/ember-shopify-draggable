@@ -1,5 +1,5 @@
 {
-  "name": "ember-shopify-draggable",
+  "name": "@gavant/ember-shopify-draggable",
   "version": "0.3.0",
   "description": "Ember components for Shopify's drag and drop",
   "keywords": [
