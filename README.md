@@ -22,7 +22,7 @@ Installation
 ------------------------------------------------------------------------------
 
 ```
-ember install ember-shopify-draggable
+ember install @gavant/ember-shopify-draggable
 ```
 
 
