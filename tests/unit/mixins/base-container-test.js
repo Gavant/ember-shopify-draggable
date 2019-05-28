@@ -1,5 +1,5 @@
 import EmberObject from '@ember/object';
-import BaseContainerMixin from 'ember-shopify-draggable/mixins/base-container';
+import BaseContainerMixin from '@gavant/ember-shopify-draggable/mixins/base-container';
 import { module, test } from 'qunit';
 
 module('Unit | Mixin | base-container', function() {

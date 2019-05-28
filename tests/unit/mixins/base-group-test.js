@@ -1,5 +1,5 @@
 import EmberObject from '@ember/object';
-import BaseGroupMixin from 'ember-shopify-draggable/mixins/base-group';
+import BaseGroupMixin from '@gavant/ember-shopify-draggable/mixins/base-group';
 import { module, test } from 'qunit';
 
 module('Unit | Mixin | base-group', function() {

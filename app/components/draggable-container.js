@@ -1,1 +1,1 @@
-export { default } from 'ember-shopify-draggable/components/draggable-container';
+export { default } from '@gavant/ember-shopify-draggable/components/draggable-container';

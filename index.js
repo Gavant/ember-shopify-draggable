@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-    name: 'ember-shopify-draggable',
+    name: '@gavant/ember-shopify-draggable',
     options: {
         babel: {
             plugins: [
