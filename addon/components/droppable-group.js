@@ -31,8 +31,8 @@ export default Component.extend(BaseGroupMixin, {
             plugins.pushObject(Plugins.Collidable);
         }
         const shopifyInstance = new Droppable([], {
-            draggable: '.draggable-item',
-            dropzone: '.droppable-dropzone',
+            draggable: get(this, 'draggable') || '.draggable-item',
+            dropzone: get(this, 'dropzone') || '.droppable-dropzone',
             delay: get(this, 'delay'),
             handle: get(this, 'handle'),
             mirror: get(this, 'mirrorOptions'),
