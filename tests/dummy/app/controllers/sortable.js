@@ -15,7 +15,7 @@ export default class SortableController extends Controller {
 
     @action
     logEvent(name, event) {
-        if (get(this, 'logEvents')) {
+        if (this.logEvents) {
             //eslint-disable-next-line no-console
             console.log(`${name} fired!`, event);
         }
@@ -76,5 +76,10 @@ export default class SortableController extends Controller {
     @action
     updateItems(name, newArray) {
         this[name] = newArray;
+    }
+
+    @action
+    addItem() {
+        this.listTwo = [...this.listTwo, { name: 'Item 10' }];
     }
 }

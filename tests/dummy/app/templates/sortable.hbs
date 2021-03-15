@@ -1,7 +1,7 @@
 <h1>
     Sortable
 </h1>
-{{!-- <p>
+<p>
     <label class="checkbox-inline">
         {{input type="checkbox" checked=logEvents}} Log Events
     </label>
@@ -17,17 +17,20 @@
     <label class="checkbox-inline">
         {{input type="checkbox" checked=collidable}} Collidable Plugin
     </label>
+    <button {{on "click" this.addItem}}>
+        Add item
+    </button>
 </p>
-{{#if logEvents}}
+{{#if this.logEvents}}
     <div class="alert alert-info">
         Open your browser's console to see events being fired as you drag and drop.
     </div>
 {{/if}}
-{{#if collidable}}
+{{#if this.collidable}}
     <div class="alert alert-info">
         You won't be able to drag items directly over elements that are hghlighted in red.
     </div>
-{{/if}} --}}
+{{/if}}
 <div class="containers {{if this.collidable "collidable-enabled"}}">
     <SortableGroup
         @resizeMirror={{this.resizeMirror}}
@@ -82,9 +85,9 @@
             </header>
             <group.container
                 @items={{this.listTwo}}
-                @itemReordered={{mut this.listTwo}}
-                @itemAdded={{mut this.listTwo}}
-                @itemRemoved={{mut this.listTwo}} as |container|
+                @itemReordered={{fn this.updateItems "listTwo"}}
+                @itemAdded={{fn this.updateItems "listTwo"}}
+                @itemRemoved={{fn this.updateItems "listTwo"}} as |container|
             >
                 {{#each container.items as |item|}}
                     <container.item @item={{item}}>
@@ -103,9 +106,9 @@
             </header>
             <group.container
                 @items={{this.listThree}}
-                @itemReordered={{mut this.listThree}}
-                @itemAdded={{mut this.listThree}}
-                @itemRemoved={{mut this.listThree}} as |container|
+                @itemReordered={{fn this.updateItems "listThree"}}
+                @itemAdded={{fn this.updateItems "listThree"}}
+                @itemRemoved={{fn this.updateItems "listThree"}} as |container|
             >
                 {{#each container.items as |item|}}
                     <container.item @item={{item}}>
@@ -118,8 +121,33 @@
         </div>
     </SortableGroup>
 
-    Backing Data
-    {{#each this.list as |item|}}
-        {{item.name}}
-    {{/each}}
+    <h1>
+        Backing Data
+    </h1>
+    <div class="flex">
+        <div>
+            <h3>
+                List 1
+            </h3>
+            {{#each this.list as |item|}}
+                {{item.name}}
+            {{/each}}
+        </div>
+        <div>
+            <h3>
+                List 2
+            </h3>
+            {{#each this.listTwo as |item|}}
+                {{item.name}}
+            {{/each}}
+        </div>
+        <div>
+            <h3>
+                List 3
+            </h3>
+            {{#each this.listThree as |item|}}
+                {{item.name}}
+            {{/each}}
+        </div>
+    </div>
 </div>

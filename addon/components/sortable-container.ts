@@ -1,4 +1,5 @@
 import { action } from '@ember/object';
+import { guidFor } from '@ember/object/internals';
 import { next } from '@ember/runloop';
 import Component from '@glimmer/component';
 
@@ -19,6 +20,17 @@ export default class SortableContainer extends Component<SortableContainerArgs> 
         item: any;
         dragNode: HTMLElement;
     } | null = null;
+
+    /**
+     * Get a unique id for the current editor instance
+     *
+     * @readonly
+     * @memberof TinymceEditor
+     */
+    get uniqueId() {
+        return `draggable-container-${guidFor(this)}`;
+    }
+
     setupContainer() {
         const instance = this.args.group.shopifyInstance;
 
@@ -31,12 +43,12 @@ export default class SortableContainer extends Component<SortableContainerArgs> 
 
     _dragStop() {
         next(this, () => {
-            const items = [...this.args.items];
+            let items = [...this.args.items];
             const scheduleAddEvent = this.scheduleAdd;
             if (scheduleAddEvent) {
                 const element = document.getElementById(scheduleAddEvent.dragNode.id);
                 element?.parentNode?.removeChild(element);
-                insertAt(items, scheduleAddEvent.targetIndex, scheduleAddEvent.item);
+                items = insertAt(items, scheduleAddEvent.targetIndex, scheduleAddEvent.item);
                 this.args.itemAdded?.(items, scheduleAddEvent.item, event);
                 this.scheduleAdd = null;
             }
@@ -54,8 +66,6 @@ export default class SortableContainer extends Component<SortableContainerArgs> 
             //Sorted within this container
             if (this.container.isSameNode(targetContainer) && this.container.isSameNode(oldContainer)) {
                 items = moveElementTo(items, oldIndex, targetIndex);
-                // items = removeAt(items, oldIndex);
-                // items = insertAt(items, targetIndex, item);
                 this.args.itemReordered?.(items, item, event);
             } else if (this.container.isSameNode(targetContainer)) {
                 // added to this container
