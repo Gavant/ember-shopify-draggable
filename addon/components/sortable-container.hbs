@@ -1,0 +1,3 @@
+<div class="sortable-container" ...attributes {{did-insert this.setupContainerElement}}>
+    {{yield (hash items=@items item=(component "sortable-item" container=this dragStart=this.dragStart))}}
+</div>

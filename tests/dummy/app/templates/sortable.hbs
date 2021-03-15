@@ -60,15 +60,15 @@
                 </h3>
             </header>
             <group.container
-                items={{this.list}}
-                itemReordered={{mut this.list}}
-                itemAdded={{mut this.list}}
-                itemRemoved={{mut this.list}} as |container|
+                @items={{this.list}}
+                @itemReordered={{fn this.updateItems "list"}}
+                @itemAdded={{fn this.updateItems "list"}}
+                @itemRemoved={{fn this.updateItems "list"}} as |container|
             >
                 {{#each container.items as |item|}}
-                    {{#container.item item}}
+                    <container.item @item={{item}}>
                         {{item.name}}
-                    {{/container.item}}
+                    </container.item>
                 {{else}}
                     Im empty
                 {{/each}}
@@ -81,15 +81,15 @@
                 </h3>
             </header>
             <group.container
-                items={{this.listTwo}}
-                itemReordered={{mut this.listTwo}}
-                itemAdded={{mut this.listTwo}}
-                itemRemoved={{mut this.listTwo}} as |container|
+                @items={{this.listTwo}}
+                @itemReordered={{mut this.listTwo}}
+                @itemAdded={{mut this.listTwo}}
+                @itemRemoved={{mut this.listTwo}} as |container|
             >
                 {{#each container.items as |item|}}
-                    {{#container.item item}}
+                    <container.item @item={{item}}>
                         {{item.name}}
-                    {{/container.item}}
+                    </container.item>
                 {{else}}
                     Im Empty
                 {{/each}}
@@ -102,19 +102,24 @@
                 </h3>
             </header>
             <group.container
-                items={{this.listThree}}
-                itemReordered={{mut this.listThree}}
-                itemAdded={{mut this.listThree}}
-                itemRemoved={{mut this.listThree}} as |container|
+                @items={{this.listThree}}
+                @itemReordered={{mut this.listThree}}
+                @itemAdded={{mut this.listThree}}
+                @itemRemoved={{mut this.listThree}} as |container|
             >
                 {{#each container.items as |item|}}
-                    {{#container.item item}}
+                    <container.item @item={{item}}>
                         {{item.name}}
-                    {{/container.item}}
+                    </container.item>
                 {{else}}
                     Im Empty
                 {{/each}}
             </group.container>
         </div>
     </SortableGroup>
+
+    Backing Data
+    {{#each this.list as |item|}}
+        {{item.name}}
+    {{/each}}
 </div>

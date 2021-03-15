@@ -1,6 +1,6 @@
 import Controller from '@ember/controller';
 import { action, get } from '@ember/object';
-
+import { tracked } from '@glimmer/tracking';
 export default class SortableController extends Controller {
     logEvents = false;
     resizeMirror = false;
@@ -8,9 +8,10 @@ export default class SortableController extends Controller {
     swapAnimation = false;
     collidable = false;
     collidables = '.container-list > header';
-    list = [{ name: 'Item 1' }, { name: 'Item 2' }, { name: 'Item 3' }];
-    listTwo = [{ name: 'Item 4' }, { name: 'Item 5' }, { name: 'Item 6' }];
-    listThree = [{ name: 'Item 7' }, { name: 'Item 8' }, { name: 'Item 9' }];
+
+    @tracked list = [{ name: 'Item 1' }, { name: 'Item 2' }, { name: 'Item 3' }];
+    @tracked listTwo = [{ name: 'Item 4' }, { name: 'Item 5' }, { name: 'Item 6' }];
+    @tracked listThree = [{ name: 'Item 7' }, { name: 'Item 8' }, { name: 'Item 9' }];
 
     @action
     logEvent(name, event) {
@@ -70,5 +71,10 @@ export default class SortableController extends Controller {
     @action
     collidableOut(event) {
         this.logEvent('collidable:out', event);
+    }
+
+    @action
+    updateItems(name, newArray) {
+        this[name] = newArray;
     }
 }
