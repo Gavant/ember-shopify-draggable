@@ -1,5 +1,7 @@
-<h1>Sortable</h1>
-<p>
+<h1>
+    Sortable
+</h1>
+{{!-- <p>
     <label class="checkbox-inline">
         {{input type="checkbox" checked=logEvents}} Log Events
     </label>
@@ -17,98 +19,102 @@
     </label>
 </p>
 {{#if logEvents}}
-    <div class="alert alert-info">Open your browser's console to see events being fired as you drag and drop.</div>
+    <div class="alert alert-info">
+        Open your browser's console to see events being fired as you drag and drop.
+    </div>
 {{/if}}
 {{#if collidable}}
-    <div class="alert alert-info">You won't be able to drag items directly over elements that are hghlighted in red.</div>
-{{/if}}
-<div class="containers {{if collidable 'collidable-enabled'}}">
-    {{#sortable-group
-        resizeMirror=resizeMirror
-        snappable=snappable
-        collidable=collidable
-        collidables=collidables
-        swapAnimation=swapAnimation
-        swapAnimationOptions=(hash
-            horizontal=true
-            duration=250
-        )
-        mirrorOptions=(hash
-            constrainDimensions=true
-        )
-        sortableActions=(hash
-            start=(action "sortableStart")
-            sort=(action "sortableSort")
-            sorted=(action "sortableSorted")
-            stop=(action "sortableStop")
-        )
-        dragActions=(hash
-            start=(action "dragStart")
-            move=(action "dragMove")
-            over=(action "dragOver")
-            out=(action "dragOut")
-            stop=(action "dragStop")
-        )
-        snapActions=(hash
-            in=(action "snapIn")
-            out=(action "snapOut")
-        )
-        collidableActions=(hash
-            in=(action "collidableIn")
-            out=(action "collidableOut")
-        )
-        as |group|
-    }}
+    <div class="alert alert-info">
+        You won't be able to drag items directly over elements that are hghlighted in red.
+    </div>
+{{/if}} --}}
+<div class="containers {{if this.collidable "collidable-enabled"}}">
+    <SortableGroup
+        @resizeMirror={{this.resizeMirror}}
+        @snappable={{this.snappable}}
+        @collidable={{this.collidable}}
+        @collidables={{this.collidables}}
+        @swapAnimation={{this.swapAnimation}}
+        @swapAnimationOptions={{hash horizontal=true duration=250}}
+        @mirrorOptions={{hash constrainDimensions=true}}
+        @sortableActions={{hash
+            start=this.sortableStart
+            sort=this.sortableSort
+            sorted=this.sortableSorted
+            stop=this.sortableStop
+        }}
+        @dragActions={{hash
+            start=this.dragStart
+            move=this.dragMove
+            over=this.dragOver
+            out=this.dragOut
+            stop=this.dragStop
+        }}
+        @snapActions={{hash in=this.snapIn out=this.snapOut}}
+        @collidableActions={{hash in=this.collidableIn out=this.collidableOut}} as |group|
+    >
         <div class="sortable container-list">
             <header>
-                <h3>Container One</h3>
+                <h3>
+                    Container One
+                </h3>
             </header>
-            {{#group.container list
-                itemReordered=(action (mut list))
-                itemAdded=(action (mut list))
-                itemRemoved=(action (mut list)) as |container|}}
-                    {{#each container.items as |item|}}
-                        {{#container.item item}}
-                            {{item.name}}
-                        {{/container.item}}
-                    {{else}}
-                        Im empty
-                    {{/each}}
-            {{/group.container}}
+            <group.container
+                items={{this.list}}
+                itemReordered={{mut this.list}}
+                itemAdded={{mut this.list}}
+                itemRemoved={{mut this.list}} as |container|
+            >
+                {{#each container.items as |item|}}
+                    {{#container.item item}}
+                        {{item.name}}
+                    {{/container.item}}
+                {{else}}
+                    Im empty
+                {{/each}}
+            </group.container>
         </div>
         <div class="sortable container-list">
             <header>
-                <h3>Container Two</h3>
+                <h3>
+                    Container Two
+                </h3>
             </header>
-            {{#group.container listTwo
-                itemReordered=(action (mut listTwo))
-                itemAdded=(action (mut listTwo))
-                itemRemoved=(action (mut listTwo)) as |container|}}
-                    {{#each container.items as |item|}}
-                        {{#container.item item}}
-                            {{item.name}}
-                        {{/container.item}}
-                    {{else}}
-                        Im Empty
-                    {{/each}}
-            {{/group.container}}
+            <group.container
+                items={{this.listTwo}}
+                itemReordered={{mut this.listTwo}}
+                itemAdded={{mut this.listTwo}}
+                itemRemoved={{mut this.listTwo}} as |container|
+            >
+                {{#each container.items as |item|}}
+                    {{#container.item item}}
+                        {{item.name}}
+                    {{/container.item}}
+                {{else}}
+                    Im Empty
+                {{/each}}
+            </group.container>
         </div>
         <div class="sortable container-list">
             <header>
-                <h3>Container Three</h3>
+                <h3>
+                    Container Three
+                </h3>
             </header>
-            {{#group.container listThree
-                itemReordered=(action (mut listThree))
-                itemAdded=(action (mut listThree))
-                itemRemoved=(action (mut listThree)) as |container|}}
-                    {{#each container.items as |item|}}
-                        {{#container.item item}}
-                            {{item.name}}
-                        {{/container.item}}
-                    {{else}}
-                        Im Empty
-                    {{/each}}
-            {{/group.container}}
+            <group.container
+                items={{this.listThree}}
+                itemReordered={{mut this.listThree}}
+                itemAdded={{mut this.listThree}}
+                itemRemoved={{mut this.listThree}} as |container|
+            >
+                {{#each container.items as |item|}}
+                    {{#container.item item}}
+                        {{item.name}}
+                    {{/container.item}}
+                {{else}}
+                    Im Empty
+                {{/each}}
+            </group.container>
         </div>
-    {{/sortable-group}}
+    </SortableGroup>
 </div>
