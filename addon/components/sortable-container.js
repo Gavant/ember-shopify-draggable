@@ -27,7 +27,7 @@ export default Component.extend(BaseContainerMixin, {
     },
     _sortableStop(event) {
         if (this.element) {
-            const items = A(get(this, 'items').toArray());
+            const items = [...get(this, 'items').toArray()];
             const targetContainer = get(event, 'data.newContainer');
             const targetIndex = get(event, 'data.newIndex');
             const oldContainer = get(event, 'data.oldContainer');
@@ -38,14 +38,16 @@ export default Component.extend(BaseContainerMixin, {
                 items.removeAt(oldIndex, 1);
                 items.insertAt(targetIndex, item);
                 tryInvoke(this, 'itemReordered', [items, item, event]);
-            } else if (this.element.isSameNode(targetContainer)) { // added to this container
+            } else if (this.element.isSameNode(targetContainer)) {
+                // added to this container
                 //schedule the update to the items array until after we can remove the dragged node. This gives ember the ability to update correctly
                 set(this, 'scheduleAdd', {
                     targetIndex,
                     item,
                     dragNode: get(event, 'data.dragEvent.source')
                 });
-            } else if (this.element.isSameNode(oldContainer)) { // removed from this container
+            } else if (this.element.isSameNode(oldContainer)) {
+                // removed from this container
                 items.removeAt(oldIndex, 1);
                 tryInvoke(this, 'itemRemoved', [items, item, event]);
             }
@@ -56,15 +58,15 @@ export default Component.extend(BaseContainerMixin, {
         //if the element is inserted into the dom and group sortable already exists, we can just add the container to the sortable group
         this.setupContainer();
     },
-    init(){
+    init() {
         this._super(...arguments);
-        if(get(this, 'group')) {
+        if (get(this, 'group')) {
             get(this, 'group').on('drag:stop', this, '_dragStop');
             get(this, 'group').on('sortable:stop', this, '_sortableStop');
         }
     },
     willDestroyElement() {
-        if(get(this, 'group')) {
+        if (get(this, 'group')) {
             get(this, 'group').off('drag:stop', this, '_dragStop');
             get(this, 'group').off('sortable:stop', this, '_sortableStop');
         }
